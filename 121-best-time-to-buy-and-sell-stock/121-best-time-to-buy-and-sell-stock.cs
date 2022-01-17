@@ -1,7 +1,30 @@
 public class Solution {
     public int MaxProfit(int[] prices) {
         
-        return OptimalApproach(prices);
+        return KadaneAlgoApproach(prices);
+        //return OptimalApproach(prices);
+        //return BruteForce(prices);
+    }
+    
+    public int KadaneAlgoApproach(int[] prices)
+    {
+        int minPrice = int.MaxValue;
+        int maxProfit = 0;
+        
+        for(int i = 0; i < prices.Length; i++)
+        {
+            minPrice  = Math.Min(minPrice, prices[i]);
+            maxProfit = Math.Max(maxProfit, prices[i] - minPrice);
+        }
+        
+        return maxProfit;
+        
+        // int minTillNow = prices[0], maxTillNow = 0;
+        // for(int i = 0; i < prices.size(); i++){
+        //     maxTillNow = max(maxTillNow, prices[i] - minTillNow);
+        //     minTillNow = min(minTillNow, prices[i]);
+        // }
+        // return maxTillNow;
     }
     
     public int OptimalApproach(int[] prices) 
