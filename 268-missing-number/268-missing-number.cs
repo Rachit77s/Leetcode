@@ -2,7 +2,7 @@ public class Solution {
     public int MissingNumber(int[] nums) {
      
         //return XORApproach(nums);
-        //return SumApproach(nums);
+        return SumApproach(nums);
         return TrickyApproach(nums);
     }
     
