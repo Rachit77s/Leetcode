@@ -20,6 +20,7 @@ public class Solution {
         return ReverseKOne(head, k);
     }
     
+    // https://www.youtube.com/watch?v=znQ8wJxnRao&ab_channel=CodeLibrary-byYogesh%26Shailesh
     public ListNode ReverseKOne(ListNode head, int k) 
     {
         ListNode iterator = head;
