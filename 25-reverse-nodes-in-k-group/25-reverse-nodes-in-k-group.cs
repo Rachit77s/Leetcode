@@ -17,7 +17,9 @@ public class Solution {
             then reverse each group.
         */
         
-        return ReverseKOne(head, k);
+        return reverseKGroupThree(head, k);
+
+        //return ReverseKOne(head, k);
     }
     
     // https://www.youtube.com/watch?v=znQ8wJxnRao&ab_channel=CodeLibrary-byYogesh%26Shailesh
@@ -59,4 +61,94 @@ public class Solution {
         
         return prev;
     }
+    
+    // Wrong output
+    public ListNode ReverseKTwo(ListNode head, int k) 
+    {
+        Stack<ListNode> stk = new Stack<ListNode>();
+        ListNode current = head;
+        ListNode prev = null;
+        
+        while (current != null)
+        {
+            int count = 0;
+            while (current != null && count < k)
+            {
+                stk.Push(current);
+                current = current.next;
+                
+                if(current == null)
+                    return head;
+                
+                count++; 
+            }
+            
+            while (stk.Count > 0)
+            {
+                if(prev == null)
+                {
+                    prev = stk.Peek();
+                    head = prev;
+                    stk.Pop();
+                }
+                else
+                {
+                    prev.next = stk.Peek();
+                    prev = prev.next;
+                    stk.Pop();
+                }
+            }
+        }
+        
+        prev.next = null;
+        return head;
+    }
+    
+    public static ListNode reverseKGroupThree(ListNode head, int k)
+    {
+        // https://leetcode.com/problems/reverse-nodes-in-k-group/discuss/183356/Java-O(n)-solution-with-super-detailed-explanation-and-illustration
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode iterator = dummy;
+
+        while (iterator != null)
+        {
+            ListNode node = iterator;
+
+            // First check whether there are k nodes to reverse
+            for (int i = 0; i < k && node != null; i++)
+            {
+                node = node.next;
+              
+            }
+
+            // Check this breaking condition
+            if (node == null)
+            {
+                break;
+            }
+            
+            ListNode curr = iterator.next;
+            ListNode prev = null;
+            ListNode next = null;
+
+            for (int i = 0; i < k; i++)
+            {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            // 0 (pointer) -> 1 <- 2 <- 3 (prev)    4 (curr) -> 5 -> 6 -> 7
+            ListNode tail = iterator.next;
+            tail.next = curr;
+            iterator.next = prev;
+            iterator = tail;
+        }
+
+        return dummy.next;
+    }
+
 }
