@@ -3,7 +3,7 @@ class Solution {
         
         List<List<Integer>> ans = new ArrayList<>();
         
-        BacktrackV1(ans, new ArrayList<Integer>(), 0, nums);
+        BacktrackV2(ans, new ArrayList<Integer>(), 0, nums);
         
         return ans;
     }
