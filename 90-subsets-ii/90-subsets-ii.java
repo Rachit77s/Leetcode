@@ -30,6 +30,9 @@ class Solution {
             
             return;
         }
+        
+        // case 2 : Don't pick the element ( notice, we did not add the current element in our temporary list
+        Backtrack(list, tempList, nums, index+1, hset); // move ahead
               
         // Main logic
 		// Case 1 : Take/Pick the element
@@ -37,9 +40,6 @@ class Solution {
         Backtrack(list, tempList, nums, index+1, hset); // move ahead
         // Remove recently added element
         tempList.remove(tempList.size()-1);
-        
-        // case 2 : Don't pick the element ( notice, we did not add the current element in our temporary list
-        Backtrack(list, tempList, nums, index+1, hset); // move ahead
     }
     
     // Neetcode video
