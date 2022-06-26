@@ -6,9 +6,10 @@ class Solution {
         Arrays.sort(nums);
         
         HashSet<List<Integer>> hset = new HashSet<List<Integer>>();        
-        //Backtrack(list, new ArrayList<>(), nums, 0, hset);
+        Backtrack(list, new ArrayList<>(), nums, 0, hset);
         
-        Backtrack2(list, new ArrayList<>(), nums, 0);
+        // Approach: Without using HashSet 
+        //Backtrack2(list, new ArrayList<>(), nums, 0);
         
         return list;
     }
@@ -29,12 +30,7 @@ class Solution {
             
             return;
         }
-        
-  
-        
-        // case 2 : Don't pick the element ( notice, we did not add the current element in our temporary list
-        Backtrack(list, tempList, nums, index+1, hset); // move ahead
-        
+              
         // Main logic
 		// Case 1 : Take/Pick the element
         tempList.add(nums[index]);
@@ -42,8 +38,8 @@ class Solution {
         // Remove recently added element
         tempList.remove(tempList.size()-1);
         
-		// case 2 : Don't pick the element ( notice, we did not add the current element in our temporary list
-        //Backtrack(list, tempList, nums, index+1, hset); // move ahead
+        // case 2 : Don't pick the element ( notice, we did not add the current element in our temporary list
+        Backtrack(list, tempList, nums, index+1, hset); // move ahead
     }
     
     // Neetcode video
