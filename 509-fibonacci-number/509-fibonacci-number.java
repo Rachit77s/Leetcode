@@ -1,5 +1,10 @@
 class Solution {
     public int fib(int n) {
+        return Recursion(n);
+    }
+    
+    public int Iterative(int n)
+    {
         int prev = 0;
         int curr = 1;
         int next = 0;
@@ -17,5 +22,16 @@ class Solution {
         }
         
         return curr;
+    }
+    
+    public int Recursion(int N)
+    {
+        if(N == 0)
+            return 0;
+        else if(N == 1)
+            return 1;
+        
+        return Recursion(N-1) + Recursion(N-2);
+            
     }
 }
