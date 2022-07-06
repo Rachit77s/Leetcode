@@ -1,6 +1,8 @@
 class Solution {
     public int fib(int n) {
-        return Recursion(n);
+        
+        return Iterative(n);
+        // return Recursion(n);
     }
     
     public int Iterative(int n)
