@@ -23,7 +23,9 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        return Naive(root);
+        
+        return Recursive(root);
+        // return Naive(root);
     }
     
     // T.C.: O(N), S.C: O(N)
@@ -41,7 +43,7 @@ class Solution {
             
             for(int i=0; i < levelSize; i++)
             {
-                Node currNode = q.poll();
+                Node currNode = q.remove();
                 
                 if(i == levelSize - 1)
                     currNode.next = null;
@@ -56,6 +58,26 @@ class Solution {
                     
             }
         }
+        
+        return root;
+    }
+    
+    public Node Recursive(Node root)
+    {
+        if(root == null)
+            return null;
+        
+        // Connect the left subtree of same level with right subtree of that same level 
+        if(root.left != null)
+            root.left.next = root.right;
+        
+        // Connect the rightmost node of a level to the leftmost node of the next level.
+        // Stand at node 2 and think about node 5 & 6
+        if(root.right != null && root.next != null)
+            root.right.next = root.next.left;
+        
+        Recursive(root.left);
+        Recursive(root.right);
         
         return root;
     }
