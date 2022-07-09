@@ -23,9 +23,11 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        
-        return Recursive(root);
+            
         // return Naive(root);
+        // return Recursive(root);
+        // return Recursive(root);
+        return Optimized(root);
     }
     
     // T.C.: O(N), S.C: O(N)
@@ -62,6 +64,7 @@ class Solution {
         return root;
     }
     
+    // T.C.: O(N), S.C: O(N) 
     public Node Recursive(Node root)
     {
         if(root == null)
@@ -78,6 +81,38 @@ class Solution {
         
         Recursive(root.left);
         Recursive(root.right);
+        
+        return root;
+    }
+    
+    public Node Optimized(Node root) 
+    {
+        if (root == null) 
+            return root;
+        
+        Node prev = root;   // Think of it as current level
+        Node curr = null;
+        
+        while(prev != null)
+        {
+            curr = prev;    // Curr level
+            
+            while(curr != null && curr.left != null)
+            {
+                 // connect next pointer of curr left node to the right node
+                if(curr.left != null)
+                    curr.left.next = curr.right;
+                
+                if(curr.right != null && curr.next != null)
+                    curr.right.next = curr.next.left;
+                
+                // move to right next node in current level
+                curr = curr.next;
+            }
+            
+            // move to next level
+            prev = prev.left;
+        }
         
         return root;
     }
