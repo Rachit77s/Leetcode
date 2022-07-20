@@ -2,7 +2,7 @@ class Solution {
     public boolean isValidSudoku(char[][] board) {
         
         //return BetterApproach(board);
-        return OptimizedCode1(board);
+        return OptimizedCode2(board);
     }
     
     public boolean OptimizedCode1(char[][] board)
@@ -30,7 +30,6 @@ class Solution {
         return true;
     }
     
-    // Wrong
     public boolean OptimizedCode2(char[][] board)
     {
         HashSet seenSet = new HashSet();
@@ -43,7 +42,11 @@ class Solution {
                 
                 if (number != '.')
                 {
-                    if(seenSet.contains(number))
+                    // Check against the key that we stored.
+                    if( seenSet.contains(number + " in row " + i) ||
+                        seenSet.contains(number + " in col " + j) ||
+                        seenSet.contains(number + " in block " + i/3 + "-" + j/3)
+                      )
                     {
                         return false;
                     }
@@ -106,4 +109,29 @@ class Solution {
         
         return true;
     }
+    
+    public boolean isValidSudokuComments(char[][] board) {
+        Set<String> set = new HashSet<>();
+        
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                char val = board[row][col];
+                if (val != '.') {
+                    int block = (row / 3 * 3) + (col / 3);
+                    if (set.contains("r" + row + val) || 
+                        set.contains("c" + col + val) ||
+                        set.contains("b" + block + val))
+                        return false;
+                    else {
+                        set.add("r" + row + val);
+                        set.add("c" + col + val);
+                        set.add("b" + block + val);
+                    }   
+                }
+            }
+        }
+        
+        return true;
+    }
+
 }
