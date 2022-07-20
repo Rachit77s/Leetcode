@@ -1,21 +1,25 @@
 class Solution {
     public int[] plusOne(int[] digits) {
         
-        int carry = 1;
-        int index = digits.length - 1;
-        while (index >= 0 && carry > 0)
+        int n = digits.length;
+        
+        for(int i = n - 1; i >= 0; i--)
         {
-            digits[index] = (digits[index] + carry) % 10;
-            carry = digits[index] == 0 ? 1 : 0;
-            index--;
+            // If the digit is not 9, simply increment and return
+            if(digits[i] < 9)
+            {
+                digits[i] += 1;
+                return digits;
+            }
+            
+            // If we are here, it means digit is 9
+            digits[i] = 0;
         }
         
-        if (carry > 0)
-        {
-            digits = new int[digits.length + 1];
-            digits[0] = 1;
-        }
+        // By default all the values get initialised by 0.
+        int[] newNumber = new int [n+1];
+        newNumber[0] = 1;
         
-        return digits;
+        return newNumber;        
     }
 }
