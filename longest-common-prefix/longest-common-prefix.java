@@ -1,48 +1,12 @@
 class Solution {
     public String longestCommonPrefix(String[] strs) {
         
-//         int minLength = Integer.MAX_VALUE;
-//         String baseStr = "";
-//         int baseStrIdx = -1;
-//         for(int i = 0; i < strs.length; i++)
-//         {
-//             if(minLength > strs[i].length())
-//             {
-//                 minLength = strs[i].length();
-//                 baseStr = strs[i];
-//                 baseStrIdx = i;
-//             }
-//         }
- 
-//         String prefix = baseStr;
-        
-//         for(int arrayIdx = 0; arrayIdx < strs.length; arrayIdx++)
-//         {
-//             String tempStr = strs[arrayIdx];
-            
-//             if(tempStr == baseStr)
-//                 continue;
-            
-//             String currPrefix = "";
-//             for(int strIdx = 0; strIdx < minLength; strIdx++)
-//             {
-//                 if(tempStr.charAt(strIdx) == baseStr.charAt(strIdx))
-//                 {
-//                     currPrefix += baseStr.charAt(strIdx);
-//                 }
-//             }
-            
-//             if(currPrefix.length() < prefix.length())
-//             {
-//                 prefix = currPrefix;
-//             }
-//         }
-        
-//         // strs = ["flower","flow","flight"]
-//         // Output: "fl"
-        
-//         return prefix;
-        
+        // Pick 0th index string and store it in a prefix array.
+        // And compare this stored prefix string next strings present in the array.
+        // Now compare each character of prefix string with each character of the string present in the array.
+        // If at any point characters don't match then break to handle edge case.
+        // Else append that character in to the prefix array.
+        // Increment i and do steps 1-3 till the length of that string.
         
         String[] prefix = new String[strs.length];
         prefix[0] = strs[0];
@@ -70,8 +34,10 @@ class Solution {
             if(A.charAt(i) == B.charAt(i))
                 sb.append(A.charAt(i));
             else
-                break;
+                break;  
         }
+        
+        // If we don't use break then for ["cir", "car"] the output would be "cr" instead of "c". 
         
         return sb.toString();
     }
