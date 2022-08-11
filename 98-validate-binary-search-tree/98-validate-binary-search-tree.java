@@ -15,19 +15,34 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return ValidBST(root, null, null);
+        
+        return RangeBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        //return RangeBSTHelper(root, null, null);
     }
     
-    
-    
-    public boolean ValidBST(TreeNode root, TreeNode left, TreeNode right)
+    public boolean RangeBSTHelper(TreeNode root, long minRange, long maxRange)
     {
         if(root == null)
             return true;
         
+        // The current node's value must be between low and high.
+        if((root.val <= minRange) || (root.val >= maxRange))
+            return false;
+        
+        // The left and right subtree must also be valid.
+        return RangeBSTHelper(root.left, minRange, root.val) && RangeBSTHelper(root.right, root.val , maxRange);
+    }
+    
+    public boolean NullBSTHelper(TreeNode root, TreeNode left, TreeNode right)
+    {
+        if(root == null)
+            return true;
+        
+        // The current node's value must be between low and high.
         if((left != null && root.val <= left.val) || (right != null && root.val >= right.val))
             return false;
         
-        return ValidBST(root.left, left, root) && ValidBST(root.right, root , right);
+        // The left and right subtree must also be valid.
+        return NullBSTHelper(root.left, left, root) && NullBSTHelper(root.right, root , right);
     }
 }
