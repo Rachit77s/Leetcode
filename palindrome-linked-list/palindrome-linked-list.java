@@ -11,7 +11,7 @@
 class Solution {
     public boolean isPalindrome(ListNode head) {
           
-        return Helper(head);
+        return LeetcodeCommentHelper(head);
         // return StriverHelper(head);
     }
     
@@ -58,7 +58,73 @@ class Solution {
         return true;
     }
     
-    // https://www.youtube.com/watch?v=-DtNInqFUXs&t=727s
+    public boolean LeetcodeCommentHelper(ListNode head) 
+    {
+            ListNode fast = head;
+            ListNode slow = head;
+
+            while(fast != null && fast.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            // If fast is null, it means it is an even length LL
+            // If fast is not null, it means it is a odd length LL
+            if(fast != null)
+                 slow = slow.next; // Move slow to one ahead
+
+        ListNode middle = Reverse(slow);	
+
+        ListNode head1 = head;
+        ListNode head2 = middle;   
+
+        while(head2 != null)
+        {
+            if(head2.val != head1.val)
+                return false;
+
+            head2 = head2.next;
+            head1 = head1.next;
+        }
+
+        return true;
+
+    }
+    
+    public ListNode GetMiddle(ListNode head) 
+    {
+        ListNode slow = head;
+        // Notice fast pointer initialisation
+        ListNode fast = head.next;
+        
+        while(fast != null && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        return slow;
+    }
+    
+    public ListNode Reverse(ListNode head) 
+    {
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode next = null;
+        
+        while(curr != null)
+        {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+    }
+    
+        // https://www.youtube.com/watch?v=-DtNInqFUXs&t=727s
     public boolean StriverHelper(ListNode head) 
     {
         if(head == null || head.next == null)
@@ -92,38 +158,6 @@ class Solution {
         }
 
         return true;
-    }
-    
-    public ListNode GetMiddle(ListNode head) 
-    {
-        ListNode slow = head;
-        // Notice fast pointer initialisation
-        ListNode fast = head.next;
-        
-        while(fast != null && fast.next != null)
-        {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        
-        return slow;
-    }
-    
-    public ListNode Reverse(ListNode head) 
-    {
-        ListNode curr = head;
-        ListNode prev = null;
-        ListNode next = null;
-        
-        while(curr != null)
-        {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        
-        return prev;
     }
 }
 
