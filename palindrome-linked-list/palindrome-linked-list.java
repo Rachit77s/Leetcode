@@ -10,9 +10,9 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        
-        return StriverHelper(head);
-        // return Helper(head);
+          
+        return Helper(head);
+        // return StriverHelper(head);
     }
     
     public boolean Helper(ListNode head) 
@@ -58,6 +58,7 @@ class Solution {
         return true;
     }
     
+    // https://www.youtube.com/watch?v=-DtNInqFUXs&t=727s
     public boolean StriverHelper(ListNode head) 
     {
         if(head == null || head.next == null)
