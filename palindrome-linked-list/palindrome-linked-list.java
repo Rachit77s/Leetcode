@@ -10,7 +10,9 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        return Helper(head);
+        
+        return StriverHelper(head);
+        // return Helper(head);
     }
     
     public boolean Helper(ListNode head) 
@@ -32,13 +34,14 @@ class Solution {
         ListNode middle = GetMiddle(head);
         
         // 2. Reverse the list after the middle element
+        // This is important step, notice the fast pointer initialisation in this approach
         ListNode temp = middle.next;
-        middle.next = Reverse(temp);
-        
+        middle.next = Reverse(temp);      
+            
         // 3. Compare both the halves of the LL
         ListNode head1 = head;
-        ListNode head2 = middle.next;
-        
+        ListNode head2 = middle.next;    
+            
         while(head2 != null)
         {
             if(head2.val != head1.val)
@@ -47,8 +50,7 @@ class Solution {
             head2 = head2.next;
             head1 = head1.next;
         }
-        
-        
+            
         // 4: Make the LL back to original LL i.e. reverse 2nd half again(OPTIONAL STEP)
         temp = middle.next;
         middle.next = Reverse(temp);
@@ -56,9 +58,45 @@ class Solution {
         return true;
     }
     
+    public boolean StriverHelper(ListNode head) 
+    {
+        if(head == null || head.next == null)
+            return true;      
+        
+        // Striver GetMiddle function
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast.next != null && fast.next.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        // Reverse the right half
+        slow.next = Reverse(slow.next);
+        // Move slow to right half
+        slow = slow.next;
+        
+        ListNode head1 = head;
+        ListNode head2 = slow;   
+            
+        while(head2 != null)
+        {
+            if(head2.val != head1.val)
+                return false;
+            
+            head2 = head2.next;
+            head1 = head1.next;
+        }
+
+        return true;
+    }
+    
     public ListNode GetMiddle(ListNode head) 
     {
         ListNode slow = head;
+        // Notice fast pointer initialisation
         ListNode fast = head.next;
         
         while(fast != null && fast.next != null)
