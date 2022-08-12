@@ -16,8 +16,40 @@
 class Solution {
     public boolean isValidBST(TreeNode root) {
         
-        return RangeBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
-        //return RangeBSTHelper(root, null, null);
+        return BSTHelperInorderTraversal(root);
+        // return RangeBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        //return NullBSTHelper(root, null, null);
+    }
+    
+    public boolean BSTHelperInorderTraversal(TreeNode root)
+    {
+        if (root == null) 
+            return true;
+        
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        TreeNode prevNode = null;
+        
+        while (curr != null || !stack.isEmpty())
+        {
+            if(curr != null)
+            {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            else
+            {
+                curr = stack.pop();                
+                // Fail fast
+                if(prevNode != null && curr.val <= prevNode.val)
+                    return false;
+                
+                prevNode = curr;
+                curr = curr.right;
+            }
+        }
+        
+        return true;
     }
     
     public boolean RangeBSTHelper(TreeNode root, long minRange, long maxRange)
