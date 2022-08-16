@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    int max = 0;
+
     public int maxDepth(TreeNode root) {
          return Iterative(root);
     }
