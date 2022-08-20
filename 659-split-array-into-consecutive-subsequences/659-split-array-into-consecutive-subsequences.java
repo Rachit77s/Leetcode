@@ -16,6 +16,7 @@ class Solution {
           final int nextCount = count.containsKey(num + 1) ? count.get(num + 1) : 0;
           for (int j = 0; j < currCount - prevCount; ++j)
             starts.add(num);
+            
           for (int j = 0; j < currCount - nextCount; ++j)
             ends.add(num);
         }
