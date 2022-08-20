@@ -16,8 +16,42 @@
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         
+        return UsingIteration(root);
+        // List<Integer> ans = new ArrayList<Integer>();
+        // UsingRecursion(root, 0, ans);
+        // return ans;
+    }
+    
+    public List<Integer> UsingIteration(TreeNode root) 
+    {
+        if(root == null)
+            return new ArrayList<Integer>();
+        
         List<Integer> ans = new ArrayList<Integer>();
-        UsingRecursion(root, 0, ans);
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        
+        while(!q.isEmpty())
+        {
+            int level = q.size();
+            
+            for(int i = 0; i < level; i++)
+            {
+                TreeNode curr = q.peek();
+                q.remove();
+                
+                if(i == level - 1)
+                    ans.add(curr.val);
+                
+                if(curr.left != null)
+                    q.add(curr.left);
+                
+                if(curr.right != null)
+                    q.add(curr.right);
+            }
+        }
+        
+        
         return ans;
     }
     
