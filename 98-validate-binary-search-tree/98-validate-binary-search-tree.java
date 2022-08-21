@@ -25,7 +25,7 @@ class Solution {
     public boolean BSTHelperIncreasingOrder(TreeNode root)
     {
         // The inorder traversal of valid BST is always sorted in ascending order
-        // So, I am using one variable[value] to check 
+        // So, using one variable[value] to check 
         // If at every nodeValue in inorder traversal its increasing or not. 
         // If it is not increasing -> return false else return true;
         
@@ -49,8 +49,7 @@ class Solution {
         
         boolean rightSubTreeValue = BSTHelperIncreasingOrder(root.right);
 
-        return leftSubTreeValue & rightSubTreeValue;
-        
+        return leftSubTreeValue & rightSubTreeValue;       
     }
     
     public boolean BSTHelperInorderTraversal(TreeNode root)
