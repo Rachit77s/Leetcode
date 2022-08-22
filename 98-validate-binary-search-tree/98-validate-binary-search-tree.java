@@ -106,6 +106,6 @@ class Solution {
             return false;
         
         // The left and right subtree must also be valid.
-        return NullBSTHelper(root.left, left, root) && NullBSTHelper(root.right, root , right);
+        return NullBSTHelper(root.left, left, root) && NullBSTHelper(root.right, root, right);
     }
 }
