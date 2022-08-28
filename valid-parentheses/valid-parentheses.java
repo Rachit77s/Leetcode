@@ -16,6 +16,7 @@ class Solution {
                 stk.push('}');
             else if(A.charAt(i) == '[')
                 stk.push(']');
+            // Below is the edge case Ex i/p: }
             else if(stk.isEmpty() || A.charAt(i) != stk.pop())
                 return false;
         }
