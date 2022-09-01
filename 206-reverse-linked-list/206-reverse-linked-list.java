@@ -11,7 +11,8 @@
 class Solution {
     public ListNode reverseList(ListNode head) {
         
-        return Recursive(head);
+        return Iterative(head);
+        // return Recursive(head);
     }
     
     public ListNode Recursive(ListNode head) 
@@ -35,6 +36,21 @@ class Solution {
     
     public ListNode Iterative(ListNode head) 
     {
-        return head;
+        if(head == null || head.next == null)
+            return head;
+        
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode next = null;
+        
+        while(curr != null)
+        {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
     }
 }
