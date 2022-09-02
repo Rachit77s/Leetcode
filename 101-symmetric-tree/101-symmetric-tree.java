@@ -17,9 +17,9 @@ class Solution {
     
     public boolean isSymmetric(TreeNode root) {
         
-        return UsingQueue(root);
-        // return UsingStack(root);
-        // return Recursion(root.left, root.right); 
+        // return UsingQueue(root);
+        //return UsingStack(root);
+         return Recursion(root.left, root.right); 
     }
     
     public boolean Recursion(TreeNode leftSubtree, TreeNode rightSubtree) 
