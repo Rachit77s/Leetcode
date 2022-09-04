@@ -39,9 +39,12 @@ class Solution {
         if (!map.get(x).containsKey(y)) {
             map.get(x).put(y, new PriorityQueue<>());
         }
+        // Get from map
         map.get(x).get(y).offer(root.val);
+        
         dfs(root.left, x - 1, y + 1, map);
         dfs(root.right, x + 1, y + 1, map);
+        
     }
 //         return UsingRecursion(root, 0, new TreeMap<Integer, List<Integer>>());
 //     }
