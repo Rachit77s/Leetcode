@@ -43,8 +43,10 @@ class Solution {
         ListNode prev = null;
         ListNode next = null;
         
+        // Iterate
         while(curr != null)
         {
+            // Save next pointer reference
             next = curr.next;
             curr.next = prev;
             prev = curr;
