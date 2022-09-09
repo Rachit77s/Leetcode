@@ -16,11 +16,13 @@
 class Solution {
     public TreeNode insertIntoBST(TreeNode root, int val) {
         
-        if(root == null)
-            return new TreeNode(val);
+//         if(root == null)
+//             return new TreeNode(val);
         
-        Recursion(root, val);
-        return root;
+//         Recursion(root, val);
+//         return root;
+        
+        return Iterative1(root, val);
     }
     
     public TreeNode Recursion(TreeNode root, int K) 
@@ -89,6 +91,7 @@ class Solution {
         
         while(curr != null)
         {         
+            // Make curr node as parent and move forward.
             parent = curr;
             if(curr.val > K)
             {
