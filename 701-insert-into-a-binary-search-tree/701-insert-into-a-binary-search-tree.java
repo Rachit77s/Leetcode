@@ -22,7 +22,7 @@ class Solution {
 //         Recursion(root, val);
 //         return root;
         
-        return Iterative1(root, val);
+        return Iterative2(root, val);
     }
     
     public TreeNode Recursion(TreeNode root, int K) 
