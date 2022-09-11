@@ -16,7 +16,8 @@
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         
-        return Inorder(root);
+        return MorrisTraversal(root);
+        // return Inorder(root);
     }
     
     public List<Integer> Inorder(TreeNode root) 
