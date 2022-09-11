@@ -1,5 +1,31 @@
 class Solution {
     public int pivotIndex(int[] nums) {
+        return MostOptimized(nums);
+    }
+    
+    public int MostOptimized(int[] nums)
+    {
+        int prefixSum = 0;
+
+        for(int i=0; i < nums.length; i++)
+            prefixSum += nums[i];
+        
+        int leftSum = 0;
+        for(int i = 0; i < nums.length; i++)
+        {
+            prefixSum -= nums[i];
+            
+            if(leftSum == prefixSum)
+                return i;
+            
+            leftSum += nums[i];
+        }
+        
+        return -1;
+    }
+    
+    public int BetterApproach(int[] nums)
+    {
         int[] prefixSum = new int[nums.length];
         
         prefixSum[0] = nums[0];
