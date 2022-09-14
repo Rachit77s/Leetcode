@@ -18,6 +18,7 @@ class Solution {
       if (root == null) {
         return null;
       }
+        
       if (!containsOne(root)) return null;
       root.left = pruneTree(root.left);
       root.right = pruneTree(root.right);
@@ -28,6 +29,7 @@ class Solution {
       if (root == null) {
         return false;
       }
+        
       if (root.val == 1) return true; // line 1
       return containsOne(root.left) || containsOne(root.right); // line 2
     }
