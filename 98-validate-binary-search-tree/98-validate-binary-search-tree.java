@@ -16,7 +16,8 @@
 class Solution {
     public boolean isValidBST(TreeNode root) {
         
-        return BSTHelperIncreasingOrder(root);
+        return InfoIsBST(root).isBST;
+        // return BSTHelperIncreasingOrder(root);
         // return RangeBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
         //return NullBSTHelper(root, null, null);
     }
@@ -108,4 +109,38 @@ class Solution {
         // The left and right subtree must also be valid.
         return NullBSTHelper(root.left, left, root) && NullBSTHelper(root.right, root, right);
     }
+    
+    public class Info
+    {
+        Long min;
+        Long max;
+        boolean isBST;
+
+        public Info(Long min, Long max, boolean isBST)
+        {
+            this.min = min;
+            this.max = max;
+            this.isBST = isBST;
+        }
+    }
+    
+    public Info InfoIsBST(TreeNode root)
+    {
+        if(root == null)
+            return new Info(Long.MAX_VALUE, Long.MIN_VALUE, true);
+        
+        Info left = InfoIsBST(root.left);
+        Info right = InfoIsBST(root.right);
+        
+        boolean condition = left.max < root.val && root.val < right.min;
+        
+        Long minValue = Math.min(root.val, Math.min(left.min, right.min));
+        Long maxValue = Math.max(root.val, Math.max(left.max, right.max));
+        
+        if(left.isBST == true && right.isBST == true && condition == true)
+            return new Info(minValue, maxValue, true);
+        
+        return new Info(minValue, maxValue, false);
+    }
+    
 }
