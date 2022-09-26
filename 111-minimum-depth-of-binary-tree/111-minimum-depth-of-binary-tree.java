@@ -17,7 +17,8 @@ class Solution {
     int minVal = 0;
     public int minDepth(TreeNode root) {
         
-        return LevelOrder(root);
+        return Recursion(root);
+        // return LevelOrder(root);
     }
     
     public int LevelOrder(TreeNode root) 
@@ -52,4 +53,21 @@ class Solution {
         
         return level;
     }
+    
+    public int Recursion(TreeNode root) 
+    {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = Recursion(root.left);
+        int right = Recursion(root.right);
+        
+        if (left == 0 || right == 0) {
+            return Math.max(left, right) + 1;
+        }
+        else {
+            return Math.min(left, right) + 1;
+    }
+}
 }
