@@ -19,18 +19,27 @@ class Solution {
         return IterativeBFS(root, x, y);
     }
     
+    // https://www.youtube.com/watch?v=4mTFS1ls3ho
     public boolean IterativeBFS(TreeNode root, int x, int y) 
     {    
         /*
           To be a cousins, below condition should met
             1. Level should be same
-            2. Parent node should be different
+            2. Parent node should be different i.e. parent should not be same for 2 nodes
         */
         
         /*
-            Sol 1: Check level of two nodes x and y(it should be equal), and
+            Aliter Sol 1: Check level of two nodes x and y(it should be equal), and
                    if curr left and right is x and y, 
                    it means they have same parent, return false
+        */
+        
+        /*
+            Algo:
+            1. Assume x & y nodes are not there, so bool false.
+            2. For every level, check if curr node is x & y and also
+               if curr node is parent of x & y, return false.
+            3. If we found x & y and also their parents are diff., return true
         */
         
         if(root == null)
@@ -72,6 +81,7 @@ class Solution {
                     q.offer(curr.right);
             }
             
+            // Found diff nodes whose left and right child is equal to x&y
             if(xExists == true && yExists == true)
                 return true;
         }
