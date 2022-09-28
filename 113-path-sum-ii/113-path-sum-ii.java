@@ -52,17 +52,17 @@ class Solution {
             return;
         
         tempList.add(root.val);
+        targetSum = targetSum - root.val;
         
-        if(root.left == null && root.right == null && targetSum == root.val)
+        if(root.left == null && root.right == null)
         {
-            ans.add(new ArrayList<Integer>(tempList));
-             // if (targetSum == 0) // Found valid path
-             //    ans.push_back(path);
+             if (targetSum == 0) // Found valid path
+                ans.add(new ArrayList<Integer>(tempList));
         }
         else
         {
-            BacktrackV2(root.left, targetSum - root.val, ans, tempList);
-            BacktrackV2(root.right, targetSum - root.val, ans, tempList);
+            BacktrackV2(root.left, targetSum, ans, tempList);
+            BacktrackV2(root.right, targetSum, ans, tempList);
         }
 
         tempList.remove(tempList.size() - 1);  
