@@ -16,9 +16,25 @@
 class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
         
-        return Recursive(root);
-        
+        // return Recursive(root);
+        return StackDFS(root);
         // return Level(root);
+    }
+         
+    public int Recursive(TreeNode root)
+    {
+        if(root == null) 
+            return 0;
+        
+        int result = 0;
+        
+        // Focus on one node and checks for various possibilities of that node being 
+        // the left leaf!!!!
+        if(root.left != null && root.left.left == null && root.left.right == null)
+                result = result + root.left.val;
+        
+        // Then generalize that logic to all other nodes be it right or left subtree!
+        return result + Recursive(root.left) + Recursive(root.right);
     }
     
     public int Level(TreeNode root)
@@ -62,50 +78,32 @@ class Solution {
     {   
         if(root == null) 
             return 0;
-
-        // Single node
-        if(root.left == null && root.right == null)
-            return 0;
         
         int sum = 0;
-        Stack<TreeNode> stk = new Stack<TreeNode>();
         TreeNode curr = root;
+        Stack<TreeNode> stk = new Stack<TreeNode>();
+        
+        stk.push(curr);
 
-        while(!stk.isEmpty() || curr != null)
+        while(!stk.isEmpty())
         {
-            if(curr != null)
+            TreeNode temp = stk.pop();
+            
+            if(temp.left != null)
             {
-                if(curr.left != null && curr.left.left == null && curr.left.right == null)
-                    sum = sum + curr.left.val;
-                
-                stk.push(curr);
-                curr = curr.left;
+                if(temp.left.left == null && temp.left.right == null)
+                    sum = sum + temp.left.val;
+                else
+                    stk.push(temp.left);
             }
-            else
-            {
-                TreeNode temp = stk.pop();
-                
-                if(temp.right != null && temp.right.left == null)
-                    sum = sum + temp.right.val;
-                
-                curr = temp.right;
+            
+            if(temp.right != null)
+            {   
+                stk.push(temp.right);
             }
         }
 
         return sum;
-    }
-    
-    public int Recursive(TreeNode root)
-    {
-        if(root == null) 
-            return 0;
-        
-        int result = 0;
-        
-        if(root.left != null && root.left.left == null && root.left.right == null)
-                result = result + root.left.val;
-        
-        return result + Recursive(root.left) + Recursive(root.right);
     }
 }
 
