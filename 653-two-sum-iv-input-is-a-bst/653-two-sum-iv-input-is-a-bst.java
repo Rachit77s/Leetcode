@@ -45,21 +45,19 @@ class Solution {
         }
         
         // 2 Sum
-//         HashSet<Integer> set = new HashSet<>();
+        HashSet<Integer> set = new HashSet<>();
         
-//         for(int i = 0; i < treeList.size(); i++)
-//         {
-//             if(set.contains(k - treeList.get(i)))
-//                 return true;
+        for(int i = 0; i < treeList.size(); i++)
+        {
+            if(set.contains(k - treeList.get(i)))
+                return true;
             
-//             set.add(treeList.get(i));
-//         }
+            set.add(treeList.get(i));
+        }
         
-//         return false;
+        return false;
         
-        /*
-        
-        */
+    /*
         // Alternate to HashSet:
         // 2 pointer approach, as the treeList is sorted as per BST inorder property
         int i = 0;
@@ -77,6 +75,8 @@ class Solution {
         }
         
         return false;
+    */
+
     }
 
 //     public boolean OptimizedOne(TreeNode root, int k) 
