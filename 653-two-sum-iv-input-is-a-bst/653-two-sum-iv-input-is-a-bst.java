@@ -16,10 +16,11 @@
 class Solution {
     public boolean findTarget(TreeNode root, int k) {
         
-        return BruteForce(root, k);
+        return DFSHelper(root, k);
+        // return InorderApproach(root, k);
     }
     
-    public boolean BruteForce(TreeNode root, int k) 
+    public boolean InorderApproach(TreeNode root, int k) 
     {
         if(root == null)
             return false;
@@ -78,9 +79,23 @@ class Solution {
     */
 
     }
+    
+    public boolean DFSHelper(TreeNode root, int k) 
+    {
+        HashSet<Integer> set = new HashSet<>();
+        return DFSWithHashset(root, set, k);
+    }
 
-//     public boolean OptimizedOne(TreeNode root, int k) 
-//     {
+    public boolean DFSWithHashset(TreeNode root, HashSet<Integer> set, int k) 
+    {
+        if(root == null)
+            return false;
         
-//     }
+        if(set.contains(k - root.val))
+            return true;
+        
+        set.add(root.val);
+        
+        return DFSWithHashset(root.left, set, k) || DFSWithHashset(root.right, set, k);
+    }
 }
