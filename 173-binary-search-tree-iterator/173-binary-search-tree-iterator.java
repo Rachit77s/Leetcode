@@ -31,7 +31,7 @@ class BSTIterator {
         return temp.val;
     }
     
-    // If stk is not empty return it is not null
+    // If stk is not empty I have a list, if it is empty, I don't have list
     public boolean hasNext() {
         return !stk.isEmpty();
     }
@@ -46,6 +46,7 @@ class BSTIterator {
             root = root.left;
         }
     }
+    
 }
 
 /**
