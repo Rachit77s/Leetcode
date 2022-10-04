@@ -14,11 +14,15 @@
  * }
  */
 class Solution {
-    int ans = 0;
-    int[] cnt = new int[1];
+   
+    int count = 0;
+    int result = Integer.MIN_VALUE;
+
     public int kthSmallest(TreeNode root, int k) {
         
-        return Iterative(root, k);
+        Recursion(root, k);
+        return result;
+        // return Iterative(root, k);
     }
     
     public int Iterative(TreeNode root, int k)
@@ -51,5 +55,20 @@ class Solution {
         }
 
         return ans;
+    }
+    
+    public void Recursion(TreeNode root, int k) 
+    {
+        if(root == null)
+            return;
+        
+        Recursion(root.left, k);
+        
+        count++;
+        
+        if(count == k)
+            result = root.val;
+
+        Recursion(root.right, k);
     }
 }
