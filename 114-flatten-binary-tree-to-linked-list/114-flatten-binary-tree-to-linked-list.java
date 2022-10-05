@@ -19,7 +19,8 @@ class Solution {
     
     public void flatten(TreeNode root) {
         
-        PostorderRecursion(root);
+        IterativeStack(root);
+        // PostorderRecursion(root);
     }
     
     // https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/36977/My-short-post-order-traversal-Java-solution-for-share
@@ -38,24 +39,30 @@ class Solution {
         root.left = null;
         prev = root;
     }
-
-    // Initially pass null
-    // https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/36977/My-short-post-order-traversal-Java-solution-for-share
-    // Check comments
-    private TreeNode PostorderRecursion2(TreeNode root, TreeNode pre) 
-    {
-        if(root==null) 
-            return pre;
-        
-        TreeNode right_pre = PostorderRecursion2(root.right, pre);    
-        TreeNode left_pre = PostorderRecursion2(root.left, right_pre);
-        
-        root.right = left_pre;
-        root.left = null;
-
-        // the original pre=root statement is redundant as we are already returning left_pre
-        return left_pre;
-    }
     
-
+    // https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/36991/Accepted-simple-Java-solution-iterative
+    public void IterativeStack(TreeNode root)
+    {
+        if(root == null)
+            return;
+        
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        
+        while(!stack.isEmpty())
+        {
+            TreeNode curr = stack.pop();
+            
+            if(curr.right != null)
+                stack.push(curr.right);
+            
+            if(curr.left != null)
+                stack.push(curr.left);
+            
+            if(!stack.isEmpty())
+                curr.right = stack.peek();
+            
+            curr.left = null;  // dont forget this!! 
+        }
+    }
 }
