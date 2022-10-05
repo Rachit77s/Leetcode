@@ -19,7 +19,8 @@ class Solution {
     
     public void flatten(TreeNode root) {
         
-        IterativeStack(root);
+        MorrisTraversal(root);
+        // IterativeStack(root);
         // PostorderRecursion(root);
     }
     
@@ -63,6 +64,37 @@ class Solution {
                 curr.right = stack.peek();
             
             curr.left = null;  // dont forget this!! 
+        }
+    }
+    
+    // Babbar: https://www.youtube.com/watch?v=2BdY9fixMrM
+    // Comments: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/37010/Share-my-simple-NON-recursive-solution-O(1)-space-complexity!
+    public void MorrisTraversal(TreeNode root)
+    {
+        if(root == null)
+            return;
+        
+        TreeNode curr = root;
+        
+        // till current is not null, check its left node exists,
+        // if it exists, go to its right most node
+        while(curr != null)
+        {
+            if(curr.left != null)
+            {
+                // Find predecessor node. i.e. finding 4(rightmost node)
+                TreeNode prev = curr.left;
+                while(prev.right != null)
+                    prev = prev.right;
+                
+                // Here prev is null
+                prev.right = curr.right;
+                curr.right = curr.left;
+                curr.left = null;   // don't forget to make left as null
+            }
+            
+            // Move it to the next left node as we already have made right to point to its left
+            curr = curr.right; 
         }
     }
 }
