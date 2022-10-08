@@ -23,7 +23,6 @@ class Solution {
             
             // The direction is always up when the sum of row & col is even
             if ((row + col) % 2 == 0) {
-                // The direction is always up when the sum of row & col is even
 
                 // For last column, go down
                 if (col == n-1) { row++; }                
@@ -51,7 +50,3 @@ class Solution {
         return output;
     }
 }
-
-// 00 01 02
-// 10 11 12
-// 20 21 22    
