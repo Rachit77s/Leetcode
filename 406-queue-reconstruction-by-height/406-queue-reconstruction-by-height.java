@@ -6,6 +6,7 @@ class Solution {
         for (int[] p : people) {
             list.add(p[1], p);
         }
+        
         return list.toArray(new int[list.size()][]);
     }
 }
