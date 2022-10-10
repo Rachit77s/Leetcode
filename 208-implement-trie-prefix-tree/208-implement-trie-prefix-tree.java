@@ -6,19 +6,26 @@ class TrieNode {
 
 public class Trie {
     private TrieNode root;
-    public Trie() {
+    
+    public Trie() 
+    {
         root = new TrieNode();
     }
 
     public void insert(String word) {
         TrieNode ws = root;
-        for(int i = 0; i < word.length(); i++){
+        
+        for(int i = 0; i < word.length(); i++)
+        {
             char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null){
+            if(ws.children[c - 'a'] == null)
+            {
                 ws.children[c - 'a'] = new TrieNode();
             }
+            
             ws = ws.children[c - 'a'];
         }
+        
         ws.isWord = true;
     }
 
