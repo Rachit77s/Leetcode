@@ -17,11 +17,12 @@ class Solution {
     int ans = 0;
     public int pathSum(TreeNode root, int targetSum) {
         
-        return PathSumHelper(root, targetSum);
+        return PathSumHelperUsingMap(root, targetSum);
+        // return PathSumHelperRecursive(root, targetSum);
     }
     
     // T.C: O(N^2)
-    public int PathSumHelper(TreeNode root, int targetSum) 
+    public int PathSumHelperRecursive(TreeNode root, int targetSum) 
     {
         if(root == null)
             return 0;
@@ -30,8 +31,8 @@ class Solution {
         FindPathSum(root, targetSum);
         
         // Call Helper for the left child and right child
-        PathSumHelper(root.left, targetSum);
-        PathSumHelper(root.right, targetSum);
+        PathSumHelperRecursive(root.left, targetSum);
+        PathSumHelperRecursive(root.right, targetSum);
         
         return ans;
     }
@@ -49,4 +50,46 @@ class Solution {
         FindPathSum(root.left, targetSum);
         FindPathSum(root.right, targetSum);
     }
+    
+    // Prerequisite: https://leetcode.com/problems/subarray-sum-equals-k/
+    // https://www.youtube.com/watch?v=yyZA4v0x16w
+    public int PathSumHelperUsingMap(TreeNode root, int targetSum) 
+    {
+        if(root == null)
+            return 0;
+        
+        // long is used for case - [1000000000,1000000000,null,294967296,null,1000000000,null,1000000000,null,1000000000] , 0
+        HashMap<Long, Integer> map = new HashMap<>();
+        map.put((long)0, 1);
+        
+        // Call for the root
+        FindPathSumUsingMap(root, targetSum, map, 0);
+
+        return ans;
+    }
+    
+    // https://www.youtube.com/watch?v=yyZA4v0x16w
+    public void FindPathSumUsingMap(TreeNode root, int targetSum, HashMap<Long, Integer> map, long runningSum) 
+    {
+        if(root == null)
+            return;
+            
+        runningSum += root.val;
+        
+        if(map.containsKey(runningSum - targetSum))
+        {
+            int temp = map.get(runningSum - targetSum);
+            ans += temp;
+        }
+            
+        map.put(runningSum, map.getOrDefault(runningSum, 0) + 1);
+        
+        FindPathSumUsingMap(root.left, targetSum, map, runningSum);
+        FindPathSumUsingMap(root.right, targetSum, map, runningSum);
+        
+        // Remove the frequency of node before returning
+        map.put(runningSum, map.get(runningSum) - 1);
+        return;
+    }
+    
 }
