@@ -37,13 +37,13 @@ class Solution {
         if(root.left == null && root.right == null)
         {
             ans.add(str);
-            str = str.substring(0, str.length() - 1); 
-            return;
+            //str = str.substring(0, str.length() - 1); 
+            //return;
         }
         
         Recursive(root.left, str + "->", ans);
         Recursive(root.right, str + "->", ans);
         
-        //str = str.substring(0, str.length() - 1);    
+        str = str.substring(0, str.length() - 1);    
     }
 }
