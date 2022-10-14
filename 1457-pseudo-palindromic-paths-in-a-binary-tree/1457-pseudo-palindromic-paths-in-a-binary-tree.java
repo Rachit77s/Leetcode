@@ -18,14 +18,14 @@ class Solution {
     
     public int pseudoPalindromicPaths (TreeNode root) {
         
-        return HelperUsingSet(root);
-        // return RecursiveHelper(root);
+        // return HelperUsingSet(root);
+        return RecursiveHelper(root);
     }
     
     public int RecursiveHelper(TreeNode root)
     {
         int[] arrCount = new int[10];
-        Recursive(root, arrCount);
+        RecursiveII(root, arrCount);
         return ans;
     }
     
@@ -55,7 +55,33 @@ class Solution {
         
         Recursive(root.left, arrCount);
         Recursive(root.right, arrCount);
+    
+        arrCount[root.val]--;
+    }
+    
+    public void RecursiveII(TreeNode root, int[] arrCount)
+    {
+    /*
+        We know that in palindrome, every number occurs even number of times .
+        But in the odd length palindrome, only one number can occur odd number of times.
+        We have used that property in isPalindrome method to check if numbers are pseudo palindrome or not.
+    */
+        if(root == null)
+            return;
         
+        arrCount[root.val]++;
+        
+        if(root.left == null && root.right == null)
+        {
+            if(IsPalindrome(arrCount))
+                ans++;
+        }
+        else
+        {
+            RecursiveII(root.left, arrCount);
+            RecursiveII(root.right, arrCount);
+        }
+
         arrCount[root.val]--;
     }
     
