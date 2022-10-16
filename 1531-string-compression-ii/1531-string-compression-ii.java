@@ -12,7 +12,9 @@ class Solution {
     {
         int n = s.length();
         int[][] dp = new int[n + 1][k + 1];
-        for (int i = 1; i <= n; i++) Arrays.fill(dp[i], Integer.MAX_VALUE);
+        for (int i = 1; i <= n; i++) 
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        
         for (int i = 1; i <= n; i++)
         {
             for (int j = 0; j <= k; j++)
