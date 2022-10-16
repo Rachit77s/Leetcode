@@ -12,8 +12,8 @@
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         
-        return M2(head);
-        // return M1(head);
+        // return M2(head);
+        return M1(head);
     }
     
     // Striver: https://www.youtube.com/watch?v=QfbOhn0WZ88
