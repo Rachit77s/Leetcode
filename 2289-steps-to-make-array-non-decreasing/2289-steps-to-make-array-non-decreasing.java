@@ -9,6 +9,7 @@ class Solution {
             }
             stack[++j] = i;
         }
+        
         return res;
     }
 }
