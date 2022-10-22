@@ -1,12 +1,12 @@
 class Solution {
     public String intToRoman(int num) {
         
-        // return Helper3(num);
-        return Helper2(num);
+        return Helper1(num);
+        // return Helper2(num);
         // return Helper3(num);
     }
     
-    public String Helper(int num) 
+    public String Helper1(int num) 
     {
         // 13
         int[] integer = new int[] {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
