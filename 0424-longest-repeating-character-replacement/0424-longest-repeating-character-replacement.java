@@ -1,8 +1,8 @@
 class Solution {
     public int characterReplacement(String s, int k) {
         
-        // return Helper(s, k);
-        return HelperWithHashMap(s, k);
+        return Helper(s, k);
+        // return HelperWithHashMap(s, k);
     }
     
     // https://leetcode.com/problems/longest-repeating-character-replacement/discuss/358879/Java-Solution-Explained-and-Easy-to-Understand-for-Interviews
