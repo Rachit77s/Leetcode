@@ -1,7 +1,8 @@
 class Solution {
     public String decodeString(String s) {
         
-        return RecursiveHelper(s);
+        return RecursiveHelper2(s);
+        // return RecursiveHelper(s);
         // return Helper1(s);
     }
     
@@ -147,5 +148,44 @@ class Solution {
         }
         
         return sb.toString();
+    }
+    
+    
+    public String RecursiveHelper2(String s)
+    {
+        int i[] = {0};
+        return Recursive2(s, i);
+    }
+    
+    // Comments: https://leetcode.com/problems/decode-string/discuss/87543/0ms-simple-C%2B%2B-solution
+    public String Recursive2(String s, int[] i)
+    {
+        StringBuilder res = new StringBuilder();
+        
+        while(i[0] < s.length() && s.charAt(i[0]) != ']')
+        {
+            if (!Character.isDigit(s.charAt(i[0]))) {
+                res.append(s.charAt(i[0]++));
+            }
+            else 
+            {
+                int counter = 0;
+                while (Character.isDigit(s.charAt(i[0]))) {
+                    counter = counter * 10 + s.charAt(i[0]++) - '0';
+                }
+                
+                i[0]++; // Skipping [
+                
+                String subString = Recursive2(s, i);
+                
+                i[0]++;   //']'
+                
+                while (counter-- > 0) {
+                    res.append(subString);
+                }
+            }
+        }
+        
+        return res.toString();
     }
 }
