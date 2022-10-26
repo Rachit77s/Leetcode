@@ -1,7 +1,8 @@
 class Solution {
     public String decodeString(String s) {
         
-        return Helper1(s);
+        return RecursiveHelper(s);
+        // return Helper1(s);
     }
     
     // Good One: https://www.youtube.com/watch?v=SF2W6VDs7bc
@@ -104,4 +105,47 @@ class Solution {
         return ans;
     }
     
+    public String RecursiveHelper(String s)
+    {
+        Deque<Character> queue = new LinkedList<>();
+        for (char c : s.toCharArray()) 
+            queue.offer(c);
+        
+        return Recursive(queue);
+    }
+    public String Recursive(Deque<Character> queue)
+    {
+        // Every time we meet a '[', we treat it as a subproblem so call our recursive function to get the content in that '[' and ']'. After that, repeat that content for 'num' times.
+        // Every time we meet a ']', we know a subproblem finished and just return the 'word' we got in this subproblem.
+
+        StringBuilder sb = new StringBuilder();
+        int number = 0;
+        
+        while (!queue.isEmpty()) 
+        {
+            char ch = queue.poll();
+            
+            if(ch >= '0' && ch <= '9')
+                number = number * 10 + ch - '0';
+            else if(ch == '[')
+            {
+                // Start a new chunk, give this task to recursion function
+                String sub = Recursive(queue);
+                
+                for (int i = 0; i < number; i++) 
+                    sb.append(sub);   
+                
+                number = 0;
+            }
+            // We have finished this [] chunk, return string to upper caller
+            else if(ch == ']')
+            {
+                break;
+            }
+            else
+                sb.append(ch);
+        }
+        
+        return sb.toString();
+    }
 }
