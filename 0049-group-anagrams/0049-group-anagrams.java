@@ -64,12 +64,20 @@ class Solution {
         
         for(String s: strs)
         {
-            int[] frequencyArr = new int[128];   
+//             int[] frequencyArr = new int[128];   
             
-            for(int i = 0; i < s.length(); i++)
+//             for(int i = 0; i < s.length(); i++)
+//                 frequencyArr[s.charAt(i) - 'a']++;
+            
+//             String key = Arrays.toString(frequencyArr);
+            char[] frequencyArr = new char[26];
+            for(int i = 0;i<s.length();i++){
                 frequencyArr[s.charAt(i) - 'a']++;
-            
-            String key = Arrays.toString(frequencyArr);
+            }
+            //6 ms use char(0~127) array and new String(frequencyArr) method.
+            //17ms when use byte (-128 to 127) array and Arrays.toString(frequencyArr) method
+            //29ms when use int(-2,147,483,648 to 2,147,483,647) and Arrays.toString(frequencyArr) method
+            String key = new String(frequencyArr);
             
             List<String> tempList = map.getOrDefault(key, new LinkedList<String>());
             tempList.add(s);
