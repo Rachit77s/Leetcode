@@ -1,7 +1,8 @@
 class Solution {
     public String decodeString(String s) {
         
-        return RecursiveHelper2(s);
+        return RecursiveHelperRevision(s);
+        // return RecursiveHelper2(s);
         // return RecursiveHelper(s);
         // return Helper1(s);
     }
@@ -187,5 +188,42 @@ class Solution {
         }
         
         return res.toString();
+    }
+    
+    
+    public String RecursiveHelperRevision(String s)
+    {
+        int i[] = {0};
+        return RecursiveRevision(s, i);
+    }
+    
+    public String RecursiveRevision(String s, int[] index)
+    {
+        StringBuilder ans = new StringBuilder();
+        
+        while(index[0] < s.length() && s.charAt(index[0]) != ']')
+        {
+            if( !Character.isDigit( s.charAt(index[0]) ) )
+                ans.append(s.charAt(index[0]++));
+            else
+            {
+                int counter = 0;
+                while(Character.isDigit(s.charAt(index[0])))
+                    counter = counter * 10 + s.charAt(index[0]++) - '0';
+                
+                // Skip '['
+                index[0]++;
+                
+                String subStr = RecursiveRevision(s, index);
+                
+                // Skip ']'
+                index[0]++;
+                
+                while(counter-- != 0)
+                    ans.append(subStr);
+            }   
+        }
+        
+        return ans.toString();
     }
 }
