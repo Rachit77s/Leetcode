@@ -19,6 +19,7 @@ class Solution {
             int currRow = 0;
             int currCol = i;
             
+            // We can go from 1 column to other horizontally if they are same
             while(currRow < grid.length)
             {
                 // Move to right
