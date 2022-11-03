@@ -11,6 +11,7 @@ class Solution {
             if (cur == hashValue)
                 res = i;
         }
+        
         return s.substring(res, res + k);
     }
 }
