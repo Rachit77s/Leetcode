@@ -1,8 +1,8 @@
 class Solution {
     public int longestPalindrome(String[] words) {
         
-        return longestPalindromeComments(words);
-        // return Helper(words);
+        // return longestPalindromeComments(words);
+        return Helper(words);
     }
     
     public int longestPalindromeComments(String[] words) {
@@ -63,10 +63,10 @@ class Solution {
             
             if(map.containsKey(reversedString))
             {
-                 // Edge case of aa/bb/cc etc already palindrome
+                // Edge case of aa/bb/cc etc already palindrome
                 // case 2: both character are same, e.g. aa
                 // we can put it on both side
-                if(initialStr == reversedString)
+                if(initialStr.equals(reversedString))
                 {
                     // aa:3   bb:3    aabbbbaa
                     // Take only even occurrence of already palindrome string
@@ -75,6 +75,7 @@ class Solution {
                     
                     // Check if odd occurrence is there.
                     // We can add odd occurrence only once in the ans string.
+                    // odd frequency we can use it in middle hence extra 2 length
                     if(count % 2 == 1)
                         flag = true;
                     
@@ -89,6 +90,8 @@ class Solution {
                     // Reduce the map count
                     map.put(initialStr, map.get(initialStr) - min);
                     map.put(reversedString, map.get(reversedString) - min);
+                    
+                    // if(map.get(reverse)==0) map.remove(reverse);
                 }
             }
         }
