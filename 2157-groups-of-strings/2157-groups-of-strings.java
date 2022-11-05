@@ -9,6 +9,7 @@ public int[] groupStrings(String[] words) {
         for (char ch : w.toCharArray()) {
             mask |= 1 << (ch - 'a');
         }
+        
         map.put(mask, map.getOrDefault(mask, 0) + 1);
     }
 
