@@ -35,6 +35,7 @@ class Solution {
             res = res * 10 + left % 10;
             left /= 10;
         }
+        
         return res;
     }
 }
