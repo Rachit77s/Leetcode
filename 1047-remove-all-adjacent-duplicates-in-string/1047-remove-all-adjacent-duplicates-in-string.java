@@ -1,7 +1,8 @@
 class Solution {
     public String removeDuplicates(String s) {
         
-        return M2(s);
+        return M3(s);
+        // return M2(s);
         // return M1(s);
     }
     
@@ -54,6 +55,25 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         for(char s : stack) 
             sb.append(s);
+        
+        return sb.toString();
+    }
+    
+    public String M3(String s) 
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        for (char c : s.toCharArray()) 
+        {
+            if (sb.length() > 0 && sb.charAt(sb.length() - 1) == c) 
+            {
+                sb.deleteCharAt(sb.length() - 1);
+            } 
+            else 
+            {
+                sb.append(c);
+            }
+        }
         
         return sb.toString();
     }
