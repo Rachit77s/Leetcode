@@ -1,7 +1,8 @@
 class Solution {
     public String removeDuplicates(String s) {
         
-        return M1(s);
+        return M2(s);
+        // return M1(s);
     }
     
     public String M1(String s) 
@@ -37,5 +38,23 @@ class Solution {
         }
         
         return new String(ch);
+    }
+    
+    public String M2(String S)
+    {
+        Stack<Character> stack = new Stack<>();
+        for(char s : S.toCharArray())
+        {
+            if(!stack.isEmpty() && stack.peek() == s)
+                stack.pop();
+            else
+                stack.push(s);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for(char s : stack) 
+            sb.append(s);
+        
+        return sb.toString();
     }
 }
