@@ -7,6 +7,7 @@ class Solution {
                 dfs (board, i, j, root, res);
             }
         }
+        
         return res;
     }
 
