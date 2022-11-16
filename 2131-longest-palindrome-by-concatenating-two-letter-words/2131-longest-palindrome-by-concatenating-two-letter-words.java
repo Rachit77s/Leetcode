@@ -38,6 +38,7 @@ class Solution {
                At the end, multiply the count with 4
                
         */
+        
         int ans = 0;
         // Flag to track the odd occurrence of already a palindrome string
         boolean flag = false;
@@ -96,9 +97,10 @@ class Solution {
             }
         }
         
+        // As pair is lcca or tyyt
         ans = ans * 4;
         
-        // Already a palindrome contribute 2 in the ans
+        // If already a palindrome, contribute 2 in the ans
         if(flag == true)
             ans = ans + 2;
         
