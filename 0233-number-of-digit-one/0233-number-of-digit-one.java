@@ -4,6 +4,20 @@ class Solution {
         return M1(n);
     }
     
+    /*
+        7162: 7000 + 100 + 60 + 2
+        
+        7000 - 7162: f(162)     Remainder
+        6000 - 6999: f(999)     Quotient
+        5000 - 5999: f(999)     Quotient
+        4000 - 4999: f(999)     Quotient
+        3000 - 3999: f(999)     Quotient
+        2000 - 2999: f(999)     Quotient
+        1000 - 1999: f(999) + 1000 * 1(No of 1's in 1000 to 1999)
+        0 - 999:     f(999)     Quotient
+        
+    */
+    
     // Babbar: Code Help
     public int M1(int n) 
     {
