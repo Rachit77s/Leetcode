@@ -14,11 +14,11 @@ class Solution {
             for (int j = 0; j < board[0].length; j++)
             {
                 // If we find the char to match, then only go ahead for DFS
-                // if(board[i][j] == word.charAt(0) && DFS(board, i, j, 0, word))
-                //     return true;
+                if(board[i][j] == word.charAt(0) && DFS(board, i, j, 0, word))
+                    return true;
                 
-                if (DFS(board, i, j, 0, word))
-                        return true;
+                // if (DFS(board, i, j, 0, word))
+                //         return true;
             }
         }
         
