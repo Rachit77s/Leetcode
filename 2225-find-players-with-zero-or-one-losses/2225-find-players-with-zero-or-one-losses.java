@@ -1,8 +1,8 @@
 class Solution {
     public List<List<Integer>> findWinners(int[][] matches) {
         
-        return M2(matches);
-        // return M1(matches);
+        // return M2(matches);
+        return M1(matches);
     }
     
     public List<List<Integer>> M2(int[][] matches) 
@@ -39,52 +39,78 @@ class Solution {
     public List<List<Integer>> M1(int[][] matches) 
     {
         
-        HashSet<Integer> set = new HashSet<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        
+        HashMap<Integer, Integer> map = new HashMap<>();       
         List<List<Integer>> ans = new ArrayList<>();
         
         for(int i = 0; i < matches.length; i++)
         {
-            map.put(matches[i][0], 0);
-        }
-        
-        for(int i = 0; i < matches.length; i++)
-        {
-            int key = matches[i][1];
+            // winner
+            map.putIfAbsent(matches[i][0], 0);
             
-            if(map.containsKey(key))
-                map.put(key, map.get(key) + 1);
+            // Losser
+            if(map.containsKey(matches[i][1]))
+                map.put(matches[i][1], map.get(matches[i][1]) + 1);
             else
                 map.put(matches[i][1], 1);
         }
         
-        List<Integer> tempList = new ArrayList<>();
-        for(Map.Entry<Integer, Integer> entry : map.entrySet())
-        {
-            int mapKey = entry.getKey();
-            int value = entry.getValue();
+//         for(int i = 0; i < matches.length; i++)
+//         {
+//             int key = matches[i][1];
             
-            if(value == 0)
-                tempList.add(mapKey);
+//             if(map.containsKey(key))
+//                 map.put(key, map.get(key) + 1);
+//             else
+//                 map.put(matches[i][1], 1);
+//         }
+        
+//         List<Integer> tempList = new ArrayList<>();
+//         for(Map.Entry<Integer, Integer> entry : map.entrySet())
+//         {
+//             int mapKey = entry.getKey();
+//             int value = entry.getValue();
+            
+//             if(value == 0)
+//                 tempList.add(mapKey);
+//         }
+        
+//         Collections.sort(tempList);
+        
+//         ans.add(tempList);
+        
+//         tempList = new ArrayList<>();
+//         for(Map.Entry<Integer, Integer> entry : map.entrySet())
+//         {
+//             int mapKey = entry.getKey();
+//             int value = entry.getValue();
+            
+//             if(value == 1)
+//                 tempList.add(mapKey);
+//         }
+        
+//         Collections.sort(tempList);
+//         ans.add(tempList);
+        
+//         return ans;
+        
+
+        List<Integer> winnerList = new ArrayList<>();
+        List<Integer> losserList = new ArrayList<>();
+
+        for(int key:map.keySet())
+        {
+            if(map.get(key) == 0)
+                winnerList.add(key);
+            
+            if(map.get(key) == 1)
+                losserList.add(key);
         }
         
-        Collections.sort(tempList);
+        Collections.sort(winnerList);
+        Collections.sort(losserList);
         
-        ans.add(tempList);
-        
-        tempList = new ArrayList<>();
-        for(Map.Entry<Integer, Integer> entry : map.entrySet())
-        {
-            int mapKey = entry.getKey();
-            int value = entry.getValue();
-            
-            if(value == 1)
-                tempList.add(mapKey);
-        }
-        
-        Collections.sort(tempList);
-        ans.add(tempList);
+        ans.add(winnerList);
+        ans.add(losserList);
         
         return ans;
     }
