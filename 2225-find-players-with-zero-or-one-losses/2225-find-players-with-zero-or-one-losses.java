@@ -1,35 +1,39 @@
 class Solution {
     public List<List<Integer>> findWinners(int[][] matches) {
         
-        return M1(matches);
+        return M2(matches);
+        // return M1(matches);
     }
     
-    public List<List<Integer>> BruteForce(int[][] matches) 
+    public List<List<Integer>> M2(int[][] matches) 
     {
-        List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> zeroMatch = new ArrayList<>();
-        List<Integer> oneMatch = new ArrayList<>();
-        
-        for(int i = 0; i < matches.length; i++)
+
+        Map<Integer, Integer> losingPlayers = new HashMap<>();
+
+        for(int[] m : matches )
         {
-            int cnt = 0;
-            
-            for(int j = 0; j < matches.length; j++)
-            {
-                if(matches[i][0] == matches[j][1])
-                    cnt++;
-            }
-            
-            if(cnt == 0)
-                zeroMatch.add(matches[i][0]);
-            else if(cnt == 1)
-                oneMatch.add(matches[i][0]);
+            losingPlayers.putIfAbsent(m[0],0);
+            losingPlayers.put(m[1], losingPlayers.getOrDefault(m[1], 0) + 1);
         }
-        
-        ans.add(zeroMatch);
-        ans.add(oneMatch);
-        
-        return ans;
+
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        result.add(new ArrayList<>());
+
+        for( Map.Entry<Integer, Integer> e: losingPlayers.entrySet() )
+        {
+            if( e.getValue() == 0 ){
+                result.get(0).add(e.getKey());
+            }else if( e.getValue() == 1 ) {
+                result.get(1).add(e.getKey());                
+            }
+        }
+
+        Collections.sort(result.get(0));
+        Collections.sort(result.get(1));
+
+        return result;
+
     }
     
     public List<List<Integer>> M1(int[][] matches) 
