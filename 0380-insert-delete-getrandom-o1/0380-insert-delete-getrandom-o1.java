@@ -1,53 +1,64 @@
 class RandomizedSet {
 
-    ArrayList<Integer> ans;
+    
+    // Neetcode: https://www.youtube.com/watch?v=j4KwhBziOpg
+    ArrayList<Integer> list;
+    
+    // It will contain array element and its index in the arraylist
     HashMap<Integer, Integer> map;
     java.util.Random rand;// = new java.util.Random();
     
     public RandomizedSet() {
-        ans = new ArrayList<Integer>();
+        list = new ArrayList<Integer>();
         map = new HashMap<Integer, Integer>();
         rand = new Random();
     }
     
     public boolean insert(int val) {
         
-        // If present return false
         if(map.containsKey(val))
             return false;
+
+        map.putIfAbsent(val, list.size());
+        list.add(val);
         
-        int index = ans.size();
-        ans.add(val);
-        
-        map.put(val, index);
-        
-        // System.out.print("Inserted: " + val + " ");
         return true;
     }
     
+    // Tricky Part
     public boolean remove(int val) {
         
-        // Returns true if the item was present
-        if(map.containsKey(val))
-        {
-            int idxOfVal = map.get(val);
-            map.remove(val);
-            
-            ans.remove(Integer.valueOf(val));
-            
-            // System.out.print("Removed: " + val + " ");
-            return true;
-        }
+        // For this in O(1), we will place the element at the end, and remove it.
+        if(!map.containsKey(val))
+            return false;
         
-        return false;
+        // Java: set(int index, E element)
+        
+        // Get idx of element to be removed
+        int eleToRemoveIndex = map.get(val);
+        
+        // SWAP
+        // Get the idx of the element to be removed.
+        // Put the last element at the idx of the ele which is to be removed.
+        // Put the idx to be removed at the last idx and remove it.
+        int lastIdxElement = list.get(list.size() - 1);
+        list.set(eleToRemoveIndex, lastIdxElement);
+        list.set(list.size() - 1, val);
+        
+        // Update the lastEleIdx in the map
+        map.put(lastIdxElement, eleToRemoveIndex);
+        
+        map.remove(val);
+        list.remove(list.size() - 1);
+        
+        return true;
+        
     }
     
     public int getRandom() {
         
-        // for(int r : ans)
-        //     System.out.print("GetRandom: " + r + " ");
-        
-        return ans.get( rand.nextInt(ans.size()) );
+        int n = rand.nextInt(list.size());
+        return list.get(n);
     }
 }
 
