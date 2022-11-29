@@ -43,7 +43,7 @@ class RandomizedSet {
         // Put the idx to be removed at the last idx and remove it.
         int lastIdxElement = list.get(list.size() - 1);
         list.set(eleToRemoveIndex, lastIdxElement);
-        list.set(list.size() - 1, val);
+        // list.set(list.size() - 1, val); Not needed
         
         // Update the lastEleIdx in the map
         map.put(lastIdxElement, eleToRemoveIndex);
