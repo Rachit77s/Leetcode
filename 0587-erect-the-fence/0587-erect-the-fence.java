@@ -40,13 +40,15 @@ class Solution {
             if(cp == 0) return dist(a, p)-dist(b, p);
             return cp;
         });
+        
         int[] q = points[points.length-1];
         int i=points.length-2;
         for(; i>=0; i--){
             if(crossProduct(points[i], p, q)!=0)
                 break;
         }
-		// we need to reverse the last collinear points to avoid losing anyone of them
+        
+        // we need to reverse the last collinear points to avoid losing anyone of them
         int l = ++i;
         int h = points.length-1;
         while(l<h){
