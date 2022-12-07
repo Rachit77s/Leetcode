@@ -15,12 +15,16 @@
  */
 class Solution {
 
+    int recurSum = 0;
     public int rangeSumBST(TreeNode root, int low, int high) {
         
-        return RangeSumBSTHelper(root, low, high);
+        RangeSumBSTRecursive(root, low, high);
+        return recurSum;
+        
+        // return RangeSumBSTIterative(root, low, high);
     }
     
-    public int RangeSumBSTHelper(TreeNode root, int low, int high) 
+    public int RangeSumBSTIterative(TreeNode root, int low, int high) 
     {
         int sum = 0;
         
@@ -51,5 +55,20 @@ class Solution {
         }
         
         return sum;
+    }
+    
+    public void RangeSumBSTRecursive(TreeNode root, int low, int high) 
+    {
+        if(root == null)
+            return;
+        
+        if(root.val >= low && root.val <= high)
+            recurSum += root.val;
+        
+        if(root.val > low)
+            RangeSumBSTRecursive(root.left, low, high);
+        
+        if(root.val < high)
+            RangeSumBSTRecursive(root.right, low, high);
     }
 }
