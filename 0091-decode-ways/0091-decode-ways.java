@@ -32,7 +32,8 @@ class Solution {
 
         */
         
-        return TopDownDPHelper(s);
+        return BottomUpI(s);
+        // return TopDownDPHelper(s);
         // return BruteForce(s, 0);
     }
     
@@ -88,5 +89,61 @@ class Solution {
             dp[index] = TopDownDP(s, dp, index + 1);
         
         return dp[index];
+    }
+    
+    public int BottomUpI(String s) 
+    {
+           if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        for (int i = 2; i <= n; i++) {
+            int first = Integer.valueOf(s.substring(i - 1, i));
+            int second = Integer.valueOf(s.substring(i - 2, i));
+            if (first >= 1 && first <= 9) {
+               dp[i] += dp[i-1];  
+            }
+            if (second >= 10 && second <= 26) {
+                dp[i] += dp[i-2];
+            }
+        }
+        return dp[n];
+    }
+    
+    public int BottomUpII(String s) 
+    {
+        // If we fix the last element, then we have 2 choices
+        // single digit , 2 digit
+        return 1;
+    }
+    
+    public int numDecodingsBottomUp(String s) 
+    {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] chars = s.toCharArray();
+        int[] dp = new int[chars.length];
+        // dp[chars.length] = chars[chars.length - 1] == '0' ? 0 : 1;
+        dp[chars.length - 1] = chars[chars.length - 1] == '0' ? 0 : 1;
+        
+        for (int i = chars.length - 2; i >= 0; i--) 
+        {
+            char current = chars[i];
+            char next = chars[i + 1];
+            
+            if (current >= '1' && current <= '9') {
+                dp[i] = dp[i + 1];
+            }
+            if ((next == '1' && current >= '0' && current <= '9') ||
+                    (next == '2' && current >= '0' && current <= '6')) {
+                dp[i] += i >= 2 ? dp[i + 2] : 1;
+            }
+        }
+        
+        return dp[0];
     }
 }
