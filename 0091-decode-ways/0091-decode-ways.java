@@ -32,7 +32,7 @@ class Solution {
 
         */
         
-        return BottomUpI(s);
+        return BottomUpII(s);
         // return TopDownDPHelper(s);
         // return BruteForce(s, 0);
     }
@@ -113,11 +113,31 @@ class Solution {
         return dp[n];
     }
     
+    // https://www.youtube.com/watch?v=K4YLTQ0IQCs
     public int BottomUpII(String s) 
     {
         // If we fix the last element, then we have 2 choices
         // single digit , 2 digit
-        return 1;
+        
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        
+        for(int i = 2; i <= n; i++)
+        {
+            int singleDigit = s.charAt(i-1) - '0';
+            int doubleDigit = 10 * (s.charAt(i-2) - '0') + singleDigit;
+            
+            // Check single digit is valid
+            if(singleDigit >= 1)
+                dp[i] += dp[i-1];
+            
+            if(doubleDigit >= 10 && doubleDigit <= 26)
+                dp[i] += dp[i-2];
+        }
+        
+        return dp[n];
     }
     
     public int numDecodingsBottomUp(String s) 
