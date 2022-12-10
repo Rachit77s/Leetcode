@@ -32,8 +32,8 @@ class Solution {
 
         */
 
-        return Approach2(nums);
-        // return Approach1(nums);
+        // return Approach2(nums);
+        return Approach1(nums);
     }
 
     // https://www.youtube.com/watch?v=hJ_Uy2DzE08&ab_channel=KnowledgeCenter
