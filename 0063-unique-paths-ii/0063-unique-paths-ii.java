@@ -4,7 +4,8 @@ class Solution {
     
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         
-        return BottomUp(obstacleGrid);
+        return BottomUp2(obstacleGrid);
+        // return BottomUp(obstacleGrid);
     }
     
     public int BottomUp(int[][] A)
@@ -41,6 +42,54 @@ class Solution {
                 
                 if(j > 0)
                     dp[i][j] += dp[i][j-1];
+            }
+        }
+        
+        return dp[row-1][col-1];
+    }
+    
+    public int BottomUp2(int[][] A)
+    {
+        int row = A.length;
+        int col = A[0].length;
+
+        int[][] dp = new int[row][col];
+        
+        // Logical error I made: If 0,2 is blocked then we cant go to 0,3 as well, 
+        // so it will be 0, instead of 1.
+        
+        //System.out.print(row);
+        //System.out.print(col);
+        
+        // Fill 1st row
+        for (int i = 0; i < row; i++)
+        {
+            if (A[i][0] == 1)
+                break;
+            else
+                dp[i][0] = 1;
+        }
+        
+        // Fill 1st col
+        for (int j = 0; j < col; j++)
+        {
+            if (A[0][j] == 1)
+                break;
+            else
+                dp[0][j] = 1;
+        }
+
+        for (int i = 1; i < row; i++)
+        {
+            for (int j = 1; j < col; j++)
+            {
+                if(A[i][j] == 1)
+                {
+                    dp[i][j] = 0;
+                    continue;
+                }
+
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
             }
         }
         
@@ -116,4 +165,5 @@ class Solution {
         // Obstacle already accounted in the base case
         return dp[i][j] = TopToDown(A, i+1, j, row, col) + TopToDown(A, i, j+1, row, col);
     } 
+
 }
