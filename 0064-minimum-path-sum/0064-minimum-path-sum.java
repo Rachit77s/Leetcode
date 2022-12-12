@@ -3,7 +3,8 @@ class Solution {
     int[][]dp;
     public int minPathSum(int[][] grid) {
         
-        return BottomUpOne(grid);
+        return BottomUpTwo(grid);
+        // return BottomUpOne(grid);
         
         // return TopDownHelper(grid);
     }
