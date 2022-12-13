@@ -2,6 +2,7 @@ class Solution {
 
     int[][] dp;
 
+    // https://leetcode.com/problems/dungeon-game/discuss/1500016/Why-can't-you-go-from-top-left-to-bottom-right-Explained
     public int calculateMinimumHP(int[][] dungeon) {
 
         return BottomUpVideoExplanation(dungeon);
@@ -30,6 +31,8 @@ class Solution {
                 This is -ve case, so min health req to enter this cell is 
                 x + (-10) and this should be >= 1, so x + (-10) = 1 
                 x => 11
+                
+            At any point if our health gets zero of below we dies, so : we need 1 + (-mat[i][j]) for our health to be one.
         */
 
         int row = A.length;
@@ -41,7 +44,7 @@ class Solution {
         {
             for(int j = col - 1; j >= 0; j--)
             {
-                // Base case
+                // Base Case : we have reached our destination ie. last cell
                 if(i == row - 1 && j == col - 1)
                 {
                     if(A[i][j] > 0)
@@ -65,6 +68,7 @@ class Solution {
                 else
                 {
                     // dp[i][j] = Math.max( ( Math.min(dp[i+1][j], dp[i][j+1] )  - A[i][j]), 1);
+                    // min of either values and then cost of this cell
                     // totalHealthValue - presentCellValue
                     int heathValue = Math.min(dp[i+1][j], dp[i][j+1]) - A[i][j];
                     
@@ -82,6 +86,8 @@ class Solution {
     
     public int BottomUpVideoExplanation(int[][] A)
     {
+        // https://leetcode.com/problems/dungeon-game/discuss/52790/My-AC-Java-Version-Suggestions-are-welcome
+        
         int row = A.length;
         int col = A[0].length;
 
@@ -110,6 +116,7 @@ class Solution {
         {
             for (int j = col - 1; j >= 0; j--)
             {
+                // min of either values and then cost of this cell
                 // Final value till now - current cell value
                 int val = Math.min(dp[i+1][j], dp[i][j+1]) - A[i][j];
 
