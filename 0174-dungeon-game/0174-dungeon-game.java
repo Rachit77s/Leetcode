@@ -4,8 +4,8 @@ class Solution {
 
     public int calculateMinimumHP(int[][] dungeon) {
 
-        // return BottomUpVideoExplanation(dungeon);
-        return BottomUp(dungeon);
+        return BottomUpVideoExplanation(dungeon);
+        // return BottomUp(dungeon);
     }
     
     // https://www.youtube.com/watch?v=lSOsKhQc_VI&ab_channel=Codebix
@@ -74,6 +74,49 @@ class Solution {
                         dp[i][j] = heathValue;
                 }
                     
+            }
+        }
+        
+        return dp[0][0];
+    }
+    
+    public int BottomUpVideoExplanation(int[][] A)
+    {
+        int row = A.length;
+        int col = A[0].length;
+
+        // If the matrix is of 2x2, then create dp matrix of 3x3 because
+        // we will fill the one greater row and col of 2x2 matrix with 1, to help with base case.
+        dp = new int[row + 1][col + 1];
+
+        // Very imp to initialise matrix with infinity
+        // If we don't do that, consider when index is 2,2, loop will go to pick value from cell (3,1) & (2,2)
+        // And we will get wrong ans due to this. 
+        // Got this issue after dry run
+        for (int[] m : dp) 
+            Arrays.fill(m, Integer.MAX_VALUE);
+
+
+        // If matrix is 2x2, then fill the extra row and col(3,3) to cover the base case.
+        // Fill bottom and right col of the final cell 2x2.
+        // Bottom cell would be [3][2] and right cell would be [2][3].
+        
+        // Bottom Cell
+        dp[row][col - 1] = 1;
+        // Right cell
+        dp[row - 1][col] = 1;
+
+        for (int i = row - 1; i >= 0; i--)
+        {
+            for (int j = col - 1; j >= 0; j--)
+            {
+                // Final value till now - current cell value
+                int val = Math.min(dp[i+1][j], dp[i][j+1]) - A[i][j];
+
+                if(val <= 0)
+                    dp[i][j] = 1;   // This means curr value was +ve, hence, we don't need extra energy
+                else
+                    dp[i][j] = val;
             }
         }
         
