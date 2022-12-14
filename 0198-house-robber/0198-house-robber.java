@@ -16,7 +16,7 @@ class Solution {
     public int BottomUp(int[] A) 
     {
         int n = A.length;
-        // dp state: max amount from o to ith index
+        // dp state: max amount from 0 to ith index
         int[] dp = new int[n];
         
         dp[0] = A[0];
