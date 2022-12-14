@@ -1,9 +1,9 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         
-
+        return DPApproach(s, wordDict);
         // return RecursiveHelper(s, wordDict);
-        return NeetcodeSolution(s, wordDict);
+        // return NeetcodeSolution(s, wordDict);
     }
     
     public boolean RecursiveHelper(String s, List<String> wordDict) 
@@ -12,6 +12,7 @@ class Solution {
         return RecursiveApproach(s, 0, set);
     }
     
+    // TC: O(2^n)
     public boolean RecursiveApproach(String s, int index, HashSet<String> set) 
     {
         if(index == s.length())
@@ -58,5 +59,26 @@ class Solution {
             }
         }
         return memo[0];
+    }
+    
+    public boolean DPApproach(String s, List<String> wordDict) 
+    {
+        boolean[] dp = new boolean[s.length() + 1];
+        Set<String> set = new HashSet<>();
+        set.addAll(wordDict);
+
+        dp[0] = true;
+        
+        for (int i = 1; i <= s.length(); i++) {
+            for(int j = 0; j < i; j++)
+            {
+                if(dp[j] && set.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[s.length()];
     }
 }
