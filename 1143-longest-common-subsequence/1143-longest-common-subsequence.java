@@ -3,6 +3,7 @@ class Solution {
     public int longestCommonSubsequence(String text1, String text2) {
         
         dp = new Integer[text1.length()][text2.length()];
+        
         return Helper(text1, text2, 0, 0);
     }
     
