@@ -1,5 +1,15 @@
 class MyQueue {
 
+    /*
+        Algo:--
+        
+        Push: Push element into stack1 : O(1)
+        Pop(O(N)) operation: 
+            Transfer all the elements from stack1 to stack2
+            Delete the top element from stack2
+            Move back all the elements from stack2 to stack1
+    */
+    
     Stack<Integer> stk1;
     Stack<Integer> stk2;
     
@@ -16,34 +26,55 @@ class MyQueue {
     
     public int pop() {
         
-        while(!stk1.isEmpty())
+        // Approach 1:
+        // while(!stk1.isEmpty())
+        // {
+        //     stk2.push(stk1.pop());
+        // }
+        
+        // Approach2
+        if(stk2.isEmpty())
         {
-            stk2.push(stk1.pop());
+            while(!stk1.isEmpty())
+            {
+                stk2.push(stk1.pop());
+            }
         }
+
         
         int ele = stk2.pop();
         
-        while(!stk2.isEmpty())
-        {
-            stk1.push(stk2.pop());
-        }
+//         while(!stk2.isEmpty())
+//         {
+//             stk1.push(stk2.pop());
+//         }
         
         return ele;
     }
     
     public int peek() {
         
-        while(!stk1.isEmpty())
+        // Approach1
+        // while(!stk1.isEmpty())
+        // {
+        //     stk2.push(stk1.pop());
+        // }
+        
+        // Approach2
+        if(stk2.isEmpty())
         {
-            stk2.push(stk1.pop());
+            while(!stk1.isEmpty())
+            {
+                stk2.push(stk1.pop());
+            }
         }
         
         int ele = stk2.peek();
         
-        while(!stk2.isEmpty())
-        {
-            stk1.push(stk2.pop());
-        }
+        // while(!stk2.isEmpty())
+        // {
+        //     stk1.push(stk2.pop());
+        // }
         
         return ele;
         
@@ -51,7 +82,10 @@ class MyQueue {
     
     public boolean empty() {
         
-        return stk1.isEmpty();
+        if(stk1.isEmpty() && stk2.isEmpty())
+            return true;
+        
+        return false;
     }
 }
 
