@@ -6,8 +6,8 @@ class Solution {
         
 //         return Helper(text1, text2, 0, 0);
         
-        return LongestCommonSubsequenceIterative(text1, text2);
-        // return TopDownHelper(A, B);
+        // return LongestCommonSubsequenceIterative(text1, text2);
+        return TopDownHelper(text1, text2);
     }
 
     public int TopDownHelper(String A, String B)
