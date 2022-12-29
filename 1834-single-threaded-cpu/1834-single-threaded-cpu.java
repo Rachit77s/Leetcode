@@ -4,11 +4,13 @@ class Solution {
         return ApproachI(tasks);
     }
     
+    // https://leetcode.com/problems/single-threaded-cpu/discuss/1164102/Java%3A-sort-by-time-and-use-PQ
+    // https://leetcode.com/problems/single-threaded-cpu/discuss/1164703/JAVA-oror-MIN-HEAP-oror-Sorting-oror-Readable-Code
     public int[] ApproachI(int[][] tasks) 
     {
         // 1. Sort by start time but preserve the original index.
-        // 2. Use a minHeap to store current tasks with a custom
-        // 3. Iterate each task, and we increaste the ans time, and if the 
+        // 2. Use a minHeap and Push all tasks whose start time is ≤ the current time into heap h. 
+        // 3. Iterate each task, and we increase the ans time, and if the 
         // curr task starting time is smaller or equal to cur, we add into the pq
         // 4. Check if pq is empty, if yes, we update current time by ith task starting time
         // 5. If pq is not empty, we update the result
@@ -39,7 +41,7 @@ class Solution {
         });
         
         int[] ans = new int[tasks.length];
-        int index = 0; // for maintaining ans index
+        int ansIndex = 0; // for maintaining ans index
         int time = 0;
         
         //There are 2 situations:
@@ -64,8 +66,8 @@ class Solution {
             if(!pq.isEmpty())
             {
                 int[] curr = pq.poll();
-                ans[index] = curr[2]; // add index(arr[2]) to ans
-                index++;
+                ans[ansIndex] = curr[2]; // add index(arr[2]) to ans
+                ansIndex++;
                 time += curr[1];
             }
         }
@@ -74,8 +76,8 @@ class Solution {
         while(!pq.isEmpty())
         {
             int[] curr = pq.poll();
-            ans[index] = curr[2];
-            index++;
+            ans[ansIndex] = curr[2];
+            ansIndex++;
         }
         return ans;
     }
