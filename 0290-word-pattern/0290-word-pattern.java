@@ -1,7 +1,8 @@
 class Solution {
     public boolean wordPattern(String pattern, String s) {
         
-        return ApproachII(pattern, s);
+        return ApproachIII(pattern, s);
+        // return ApproachII(pattern, s);
         // return ApproachI(pattern, s);
     }
     
@@ -88,6 +89,18 @@ class Solution {
             wordToChar.put(word, ch);
         }
         
+        return true;
+    }
+    
+    public boolean ApproachIII(String pattern, String str)
+    {
+         String[] words = str.split(" ");
+        if (words.length != pattern.length())
+            return false;
+        Map index = new HashMap();
+        for (Integer i=0; i<words.length; ++i)
+            if (index.put(pattern.charAt(i), i) != index.put(words[i], i))
+                return false;
         return true;
     }
 }
