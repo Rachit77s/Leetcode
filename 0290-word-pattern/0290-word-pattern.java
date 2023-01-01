@@ -1,7 +1,8 @@
 class Solution {
     public boolean wordPattern(String pattern, String s) {
         
-        return ApproachI(pattern, s);
+        return ApproachII(pattern, s);
+        // return ApproachI(pattern, s);
     }
     
     public boolean ApproachI(String pattern, String s)
@@ -54,6 +55,37 @@ class Solution {
                                    
             if(cnt1 != cnt2)
                 return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean ApproachII(String pattern, String s)
+    {
+        if (pattern == null || pattern.isEmpty()) 
+            return false;
+        
+        String[] words = s.split(" ");
+        
+        if (pattern.length() != words.length) 
+            return false;
+
+        Map<Character, String> charToWord = new HashMap<>(words.length);
+        Map<String, Character> wordToChar = new HashMap<>(words.length);
+
+        for (int i = 0; i < words.length; ++i) 
+        {
+            char ch = pattern.charAt(i);
+            String word = words[i];
+            
+            if(charToWord.containsKey(ch) && !charToWord.get(ch).equals(word))
+                return false;
+            
+            if(wordToChar.containsKey(word) && !wordToChar.get(word).equals(ch))
+                return false;
+            
+            charToWord.put(ch, word);
+            wordToChar.put(word, ch);
         }
         
         return true;
