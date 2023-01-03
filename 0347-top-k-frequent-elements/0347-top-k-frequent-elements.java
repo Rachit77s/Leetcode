@@ -1,7 +1,58 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         
-        return Helper(nums, k);
+        return BucketSort(nums, k);
+        // return Helper(nums, k);
+    }
+    
+    public int[] BucketSort(int[] A, int k)
+    {
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        
+        for(int num: A)
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        
+        
+        // Bucket will contain HM frequency and List of keys
+        // i.e We will store reverse of HM  --> <Value, Key>
+        
+        // We cannot use Pair class, we need to use Array
+        // Pair<Integer, List<Integer>> bucker = new Pair<>(integer, list);
+        
+        List<Integer>[] bucket = new List[A.length + 1];
+        
+        for (int key : frequencyMap.keySet())
+        {
+            int frequency = frequencyMap.get(key);
+            
+            if (bucket[frequency] == null)
+                bucket[frequency] = new ArrayList<>();
+
+            bucket[frequency].add(key);
+        }
+        
+        int[] ans = new int[k];
+        int idx = 0;
+        
+        // Iterate from the last because the bucket contains the HM freq as key
+        for (int pos = bucket.length - 1; pos >= 0; pos--) 
+        {
+            
+            if (bucket[pos] != null) 
+            {
+                for(int j = 0; j < bucket[pos].size(); j++)
+                {                                 
+                    ans[idx] = bucket[pos].get(j);
+                    idx++;
+                }
+            }
+            
+            if(idx == k)
+                break;
+		}
+        
+
+	    return ans;
     }
     
     public int[] Helper(int[] A, int k)
