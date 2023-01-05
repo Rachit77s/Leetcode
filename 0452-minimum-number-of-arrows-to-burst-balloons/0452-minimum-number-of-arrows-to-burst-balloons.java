@@ -1,9 +1,46 @@
 class Solution {
     public int findMinArrowShots(int[][] points) {
-        return Helper(points);
+        
+        return ReadableApproach(points);
     }
     
-    public int Helper(int[][] points)
+    // https://www.youtube.com/watch?v=zBCglI35CSQ
+    // https://www.youtube.com/watch?v=fvBhjAp0j9c
+    public int ReadableApproach(int[][] points)
+    {
+        // edge cases
+        if(points == null || points.length == 0)
+            return 0;
+        
+        // Edge case of infinity, hence, use compare for sorting
+        // Sort the points based on the ending position
+        Arrays.sort(points, (a, b)->(Integer.compare(a[1], b[1])));
+        
+        // Burst the first ballon
+        int arrow = 1;
+        int prevEnd = points[0][1];
+        
+        for(int i = 1; i < points.length; ++i)
+        {
+            int currStart = points[i][0];
+            
+            // There is overlapping, so ballon burst already considered.
+            if(prevEnd >= currStart)
+            {
+                continue;
+            }
+            // No overlapping
+            else if(currStart > prevEnd)
+            {
+                arrow++;
+                prevEnd = points[i][1];
+            }
+        }
+        
+        return arrow;
+    }
+    
+    public int LCComments(int[][] points)
     {
 //         Arrays.sort(points, (a,b) -> {
 //            return a[0] - b[0]; 
