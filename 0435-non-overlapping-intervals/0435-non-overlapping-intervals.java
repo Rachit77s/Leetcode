@@ -123,6 +123,12 @@ class Solution {
         if (intervals.length == 0 ) 
             return 0;
         
+        /*
+            intervals with lowest end will allow us to fit more intervals
+if the previous end is more than the next start, remove it.
+because this means that the interval has a smaller start than previous, but a bigger end which means that its interval is bigger and hence we should remove it
+        */
+        
         // arr : [[1,2],[2,3],[3,4],[1,3]]
 //sorted by end: [[1, 2], [2, 3], [1, 3], [3, 4]]
         
@@ -140,6 +146,7 @@ class Solution {
             if(intervals[i][0] < prevEnd)
                 removed++;
             else{
+                // If not overlapping, update end time.
                 prevEnd = intervals[i][1];
             }
         }
