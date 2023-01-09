@@ -1,8 +1,9 @@
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
         
+        return Helper3(intervals);
         // return Helper2(intervals);
-        return Helper1(intervals);
+        // return Helper1(intervals);
     }
     
     public int Helper1(int[][] intervals) 
@@ -115,5 +116,35 @@ class Solution {
         }
         
         return count;
+    }
+    
+    public int Helper3(int[][] intervals) 
+    {
+        if (intervals.length == 0 ) 
+            return 0;
+        
+        // arr : [[1,2],[2,3],[3,4],[1,3]]
+//sorted by end: [[1, 2], [2, 3], [1, 3], [3, 4]]
+        
+        // Sort by the second number in each interval:
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));
+        int removed = 0;
+        // The second value of the last valid interval.
+        int prevEnd = intervals[0][1]; 
+        
+        // We need to traverse the sorted intervals, counting the number of invalid intervals, and
+        // updating the prevEnd value when you find a valid interval.
+        for(int i = 1;  i < intervals.length; i++)
+        {
+            // We have an invalid interval if the  current start time is < prevEnd;
+            if(intervals[i][0] < prevEnd)
+                removed++;
+            else{
+                prevEnd = intervals[i][1];
+            }
+        }
+        
+        // Return the number of intervals removed:
+        return removed;
     }
 }
