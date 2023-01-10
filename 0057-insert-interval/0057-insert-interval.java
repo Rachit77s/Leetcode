@@ -1,7 +1,8 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         
-        return insertI(intervals, newInterval);
+        return HelperI(intervals, newInterval);
+        // return insertI(intervals, newInterval);
     }
     
     public int[][] insertI(int[][] intervals, int[] newInterval) {
@@ -35,47 +36,92 @@ class Solution {
     
     public int[][] HelperI(int[][] intervals, int[] newInterval) 
     {
-        if(intervals.length == 0)
-            return intervals;
         
-        boolean flag = false;
-        int prevEnd = intervals[0][1];
         
-        ArrayList<ArrayList<Pair>> lis1t = new ArrayList<>();
-        ArrayList<Pair> list = new ArrayList<>();
+        List<int[]> result = new ArrayList<>();
         
-        for(int i = 0; i < intervals.length; i++)
+            /*
+        _____: current interval(i); 
+        _ _ _: newInterval
+
+1) i.start > newInterval.end，then we can safely add both to result，
+	and mark newInterval as null
+	
+			       |________|
+	|_ _ _ _ _|
+    
+			
+2) i.end < newInterval.start，then we can safely add i to result;
+	newInterval still needs to be compared with latter intervals
+
+	|________|
+			       |_ _ _ _ _|
+			
+3) There is overlap between i and newInterval. We can merge i into newInterval, 
+then use the updated newInterval to compare with latter intervals.
+
+	
+	|________|
+		|_ _ _ _ _|
+			
+		|________|
+	|_ _ _ _ _|
+        
+    */
+        
+        /*
+            Input
+            []
+            [5,7]
+            Output
+            []
+            Expected
+            [[5,7]]
+        */ 
+        
+        for(int[] i : intervals)
         {
-            int currEnd = intervals[i][1];
+            // Case I: 
+            /*1. No overlap and newInterval appears before the 
+            current interval, add newInterval to result.*/
+            if(i[0] > newInterval[1])
+            {
+                result.add(newInterval);
+                
+                // save the previous interval to newInterval 
+                // for next loop use
+                newInterval = i;
+            }
             
-            if(currEnd >= newInterval[0])
+            // Case II:
+            /*2. No overlap and newInterval appears after the 
+            current interval, add current interval to result.*/
+            else if(newInterval[0] > i[1])
             {
-                flag = true;
-                currEnd = Math.max(currEnd, newInterval[1]);
-                
-                //System.out.print("New interval" + newInterval[1]);
-                //System.out.print(" Orgnl interval" + intervals[i][1]);
-                intervals[i][0] = Math.min(intervals[i][0], newInterval[0]);
-                intervals[i][1] = currEnd;
-                
-                
-                list.add(new Pair(intervals[i][0], intervals[i][1]));
-                
-                prevEnd = currEnd;
+                result.add(i);
             }
-            else if(flag == true && prevEnd >= intervals[i][0])
+            
+            
+            // Case III: 
+            /*3. Has overlap, update the toAdd to the merged interval.*/
+            // If above conditions fail its an overlap since possibility 
+            // of new interval existing in left & right of slot is checked
+            // Update lowest of start & highest of end & not insert
+            else
             {
-                currEnd = Math.max(currEnd, prevEnd);
-                intervals[i][1] = currEnd;
-                prevEnd = currEnd;
-            }
-            else if(currEnd < newInterval[0])
-            {
-                list.add(new Pair(intervals[i][0], intervals[i][1]));
+                newInterval[0] = Math.min(newInterval[0], i[0]);//get min
+                newInterval[1] = Math.max(newInterval[1], i[1]);//get max
             }
         }
         
-        return intervals;
+        // insert the last newInterval
+        result.add(newInterval);
+        
+        // if(newInterval != null)
+        //     result.add(newInterval);
+        
+        // convert to int[][] array
+        return result.toArray(new int[result.size()][]);
     }
 }
 
