@@ -5,6 +5,8 @@ class Solution {
     }
 
     
+    // Techdose: https://www.youtube.com/watch?v=Q1TYVUEr-wY
+    // https://www.youtube.com/watch?v=kd0-hUwISDo
     public int KadaneWithInversion(int[] A)
     {
 
