@@ -1,15 +1,17 @@
 class Solution {
     public String longestCommonPrefix(String[] strs) {
         
-        String M1Ans =  M1HelperCommonPrefix(strs);
-        String M2Ans =  M2(strs);
-        String M3Ans =  M3(strs);
+//         String M1Ans =  M1HelperCommonPrefix(strs);
+//         String M2Ans =  M2(strs);
+//         String M3Ans =  M3(strs);
         
-        if(M1Ans.equals(M2Ans) && M2Ans.equals(M3Ans) &&
-           M3Ans.equals(M1Ans))
-            return M1Ans;
+//         if(M1Ans.equals(M2Ans) && M2Ans.equals(M3Ans) &&
+//            M3Ans.equals(M1Ans))
+//             return M1Ans;
         
-        return "";
+//         return "";
+        
+        return  M3(strs);
     }
     
 // Slight Modification from prefix array to prefix string
@@ -98,10 +100,10 @@ class Solution {
 
 //         return index == 0 ? "" : firstString.substring(0, index);
 
-// 		if(index == 0)
-// 				return "";
+    // 		if(index == 0)
+    // 				return "";
 
-// 		return firstString.substring(0, index);
+    // 		return firstString.substring(0, index);
         
         StringBuilder sb = new StringBuilder();
         
