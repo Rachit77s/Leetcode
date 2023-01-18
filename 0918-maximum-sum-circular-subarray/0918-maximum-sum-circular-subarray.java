@@ -1,13 +1,48 @@
 class Solution {
     public int maxSubarraySumCircular(int[] A) {
-        int total = 0, maxSum = A[0], curMax = 0, minSum = A[0], curMin = 0;
-        for (int a : A) {
-            curMax = Math.max(curMax + a, a);
-            maxSum = Math.max(maxSum, curMax);
-            curMin = Math.min(curMin + a, a);
-            minSum = Math.min(minSum, curMin);
-            total += a;
+        
+        return KadaneWithInversion(A);
+    }
+
+    
+    public int KadaneWithInversion(int[] A)
+    {
+
+        int n = A.length;
+        
+        int kadaneSum = Kadane(A);
+        
+        // Make all the elements in the array -ve
+        int totalSum = 0;
+        for(int i=0; i<A.length;i++){
+            totalSum += A[i];
+            A[i] *= -1;
         }
-        return maxSum > 0 ? Math.max(maxSum, total - minSum) : maxSum;
+        
+        int negativeKadaneSum = Kadane(A);
+        
+        if(totalSum+negativeKadaneSum == 0) 
+            return kadaneSum;
+        
+        return  Math.max(kadaneSum, totalSum+negativeKadaneSum);
+    }
+    
+    private int Kadane(int[] A)
+    {
+        int n = A.length;
+        int currSum = A[0];
+        int globalSum = A[0];
+        
+        for(int i = 1; i < n; i++)
+        {
+            currSum += A[i];
+            
+            if(currSum < A[i]) 
+                currSum = A[i];
+            
+            globalSum = Math.max(globalSum, currSum);
+        }
+        
+        return globalSum;
     }
 }
