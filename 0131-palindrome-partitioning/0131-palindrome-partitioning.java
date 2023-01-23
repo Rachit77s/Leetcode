@@ -1,37 +1,55 @@
 class Solution {
-public List<List<String>> partition(String s) {
-        // Backtracking
-        // Edge case
-        if(s == null || s.length() == 0) return new ArrayList<>();
+    public List<List<String>> partition(String s) {
         
-        List<List<String>> result = new ArrayList<>();
-        helper(s, new ArrayList<>(), result);
-        return result;
+        return Helper(s);
     }
-    public void helper(String s, List<String> step, List<List<String>> result) {
-        // Base case
-        if(s == null || s.length() == 0) {
-            result.add(new ArrayList<>(step));
+    
+    public List<List<String>> Helper(String s) 
+    {
+        // Edge case
+        if(s == null || s.length() == 0) 
+            return new ArrayList<>();
+        
+        List<List<String>> ans = new ArrayList<>();
+        List<String> tempList = new ArrayList<>();
+        
+        PartitionHelper(s, 0, ans, tempList);
+        return ans;
+    }
+    
+    public void PartitionHelper(String str, int index, List<List<String>> ans, List<String> tempList)
+    {
+        if(index == str.length())
+        {
+            ans.add(new ArrayList<>(tempList));
             return;
         }
-        for(int i = 1; i <= s.length(); i++) {
-            String temp = s.substring(0, i);
-            if(!isPalindrome(temp)) continue; // only do backtracking when current string is palindrome
-            
-            step.add(temp);  // choose
-            helper(s.substring(i, s.length()), step, result); // explore
-            step.remove(step.size() - 1); // unchoose
+        
+        for(int i = index; i < str.length(); i++)
+        {
+            // Only do backtracking when current string is palindrome
+            // If substring is Palindrome, then go for it
+            if(IsPalindrome(str, index, i))
+            {
+                // Important go till i+1 idx since last idx is exclusive
+                String subStr = str.substring(index, i + 1);
+                
+                tempList.add(subStr);   // choose
+                PartitionHelper(str, i + 1, ans, tempList);
+                
+                tempList.remove(tempList.size() - 1); // unchoose
+            }
         }
-        return;
     }
-    public boolean isPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        while(left <= right) {
-            if(s.charAt(left) != s.charAt(right))
+    
+    public boolean IsPalindrome(String str, int start, int end)
+    {
+        while(start <= end)
+        {
+            if(str.charAt(start++) != str.charAt(end--))
                 return false;
-            left ++;
-            right --;
         }
+        
         return true;
     }
 }
