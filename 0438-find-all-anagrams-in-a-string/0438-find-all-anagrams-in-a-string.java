@@ -26,7 +26,8 @@ class Solution {
             ans.add(0);
         }
 
-        // We have already compared till initial length, hence start from A.Length
+        // We have already compared till initial length, 
+        // hence start from A.Length
         int left = 0;
         int right = smallerAnagramString.length();
         while(right < largerString.length())
@@ -35,7 +36,8 @@ class Solution {
             hashOfLarger[largerString.charAt(right) - 'a']++;
             right++;
 
-            // Decrease the older element count i.e. window of Length of anagramString
+            // Decrease the older element count i.e. 
+            // window of Length of anagramString
             hashOfLarger[largerString.charAt(left) - 'a']--;
             left++;
 
