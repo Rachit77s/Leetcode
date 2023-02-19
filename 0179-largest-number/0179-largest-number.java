@@ -33,8 +33,8 @@ class Solution {
             // BA.AB gives 9 5 34 3 30
         });
         
-        for(String item : str)
-            System.out.print(item + " ");
+        // for(String item : str)
+        //     System.out.print(item + " ");
         
         // Edge case of 0
         if(str[0].equals("0"))
