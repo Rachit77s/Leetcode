@@ -4,6 +4,9 @@ class Solution {
         return LargestNumber(nums);
     }
     
+    // Techdose: https://www.youtube.com/watch?v=qEIGhVtZ-sg
+    // CodeBashers: https://www.youtube.com/watch?v=h1n-CYIyZ5k
+    // TC: O(length(longestString) * NLogN)
     public String LargestNumber(int[] A)
     {
         String[] str = new String[A.length];
@@ -13,8 +16,9 @@ class Solution {
         
         // We need to sort the array in desc order
         Arrays.sort(str, (a,b) -> {
-            String AB=a+b;
-            String BA=b+a;
+            // Compare their sums
+            String AB = a + b;
+            String BA = b + a;
             
             // We need reverse order for desc, so BA with AB
             return BA.compareTo(AB);
@@ -29,13 +33,19 @@ class Solution {
             // BA.AB gives 9 5 34 3 30
         });
         
-        // Edge case
+        for(String item : str)
+            System.out.print(item + " ");
+        
+        // Edge case of 0
         if(str[0].equals("0"))
             return "0";
         
         StringBuilder sb = new StringBuilder();
         for(int i = 0;i < str.length; i++)
             sb.append(str[i]);
+        
+    // if(sb.charAt(0) == '0')
+        //  return "0";
         
         return sb.toString();
     }
@@ -109,61 +119,5 @@ class Solution {
         
     
         return stringBuilder.toString();
-    }
-    
-    public String WrongApproach(int[] A) 
-    {
-        Arrays.sort(A);
-        
-        int[] count = new int[10];
-        
-        for(int i = 0; i < A.length; i++)
-        {
-            if(A[i] >= 0 && A[i] <= 9)
-                count[A[i]]++;
-        }
-        
-        // for(int item : count)
-        //     System.out.print(item + " ");
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for(int i = 9; i >= 1; i--)
-        {
-            if(count[i] != 0)
-            {
-                int itemCount = count[i];
-                
-                while(itemCount != 0)
-                {
-                    sb.append(i);
-                    itemCount--;
-                }
-                    
-            }
-                
-        }
-        
-        for(int i = 0; i < A.length; i++)
-        {
-            if(A[i] >= 0 && A[i] <= 9)
-                continue;
-            else
-                sb.append(A[i]);
-        }
-        
-        if(count[0] != 0)
-        {
-            int itemCount = count[0];
-                
-            while(itemCount != 0)
-            {
-                sb.append(0);
-                itemCount--;
-            }         
-        }
-    
-        
-        return sb.toString();
     }
 }
