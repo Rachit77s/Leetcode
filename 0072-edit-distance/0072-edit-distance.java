@@ -1,31 +1,7 @@
 class Solution {
     public int minDistance(String word1, String word2) {
         
-        int m = word1.length();
-        int n = word2.length();
-        
-        int[][] cost = new int[m + 1][n + 1];
-        for(int i = 0; i <= m; i++)
-            cost[i][0] = i;
-        for(int i = 1; i <= n; i++)
-            cost[0][i] = i;
-        
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                if(word1.charAt(i) == word2.charAt(j))
-                    cost[i + 1][j + 1] = cost[i][j];
-                else {
-                    int a = cost[i][j];
-                    int b = cost[i][j + 1];
-                    int c = cost[i + 1][j];
-                    cost[i + 1][j + 1] = a < b ? (a < c ? a : c) : (b < c ? b : c);
-                    cost[i + 1][j + 1]++;
-                }
-            }
-        }
-        return cost[m][n];
-        
-        // return TopDownHelper(word1, word2);
+        return TopDownHelper(word1, word2);
     }
     
     public int TopDownHelper(String s1, String s2) 
@@ -52,7 +28,7 @@ class Solution {
             return L2;
         
         if(L2 == 0)
-            return 0;
+            return L1;
         
         if(dp[L1][L2] != -1)
             return dp[L1][L2];
