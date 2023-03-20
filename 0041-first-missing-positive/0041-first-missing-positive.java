@@ -1,70 +1,44 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-//           int n = nums.length;
-    
-//     // 1. mark numbers (num < 0) and (num > n) with a special marker number (n+1) 
-//     // (we can ignore those because if all number are > n then we'll simply return 1)
-//     for (int i = 0; i < n; i++) {
-//         if (nums[i] <= 0 || nums[i] > n) {
-//             nums[i] = n + 1;
-//         }
-//     }
-//     // note: all number in the array are now positive, and on the range 1..n+1
-    
-//     // 2. mark each cell appearing in the array, by converting the index for that number to negative
-//     for (int i = 0; i < n; i++) {
-//         int num = Math.abs(nums[i]);
-//         if (num > n) {
-//             continue;
-//         }
-//         num--; // -1 for zero index based array (so the number 1 will be at pos 0)
-//         if (nums[num] > 0) { // prevents double negative operations
-//             nums[num] = -1 * nums[num];
-//         }
-//     }
-    
-//     // 3. find the first cell which isn't negative (doesn't appear in the array)
-//     for (int i = 0; i < n; i++) {
-//         if (nums[i] >= 0) {
-//             return i + 1;
-//         }
         
-        return SolutionII(nums);
-    //}
-    
-    // 4. no positive numbers were found, which means the array contains all numbers 1..n
-   // return n + 1;
+        return Helper(nums);
     }
     
-    public int SolutionII(int[] A)
+    
+    public int Helper(int[] A) 
     {
-        for(int i=0;i<A.length;i++)
-        {
-            // Avoiding -ve numbers and nums>A.length
-            if(A[i] >= A.length || A[i] < 1)
-                continue;
-            
-            // Swapping multiple condition to avoid same numbers, num>A.length, num<1,  cur num is already at crct place
-            while(A[i]!=(i+1) && A[i]<A.length && A[i]>0 && A[i]!=A[A[i]-1])
-            {
-                int t=A[i];
-                A[i]=A[t-1];
-                A[t-1]=t;
-            }
-         }
+        int i = 0;
+        int n = A.length;
         
-         // Validatng
-        for(int i=0;i<A.length;i++)
+        while(i < n)
         {
-            if(A[i]!=(i+1))
-                return i+1;
+            int correctIndex = A[i] - 1;
+            
+            // Check for +ve numbers only
+            if(A[i] > 0 && A[i] <= n && 
+               A[i] != A[correctIndex])
+            {
+                Swap(A, i, correctIndex);
+            }
+            else
+                i++;
         }
         
-        // Edge case
-        if(A[A.length-1] == A.length)
-            return A.length + 1;
-        
-        return 1;
+        for (int index = 0; index < n; index++) 
+        {
+            if (A[index] != index + 1) {
+                return index + 1;
+            }
+        }
 
+        // case 2
+        return n + 1;
+    }
+
+    static void Swap(int[] arr, int first, int second) 
+    {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
     }
 }
