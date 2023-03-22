@@ -16,6 +16,12 @@ class Solution {
         // Sort the points based on the ending position
         Arrays.sort(points, (a, b)->(Integer.compare(a[1], b[1])));
         
+        // Sort on basis of end point
+        // If two ballons are overlapping, then we shoot them with 1 arrow,
+        // and we don't update the end point i.e. ignore these 2 intervals
+        // because once we have shot them, they are no more in consideration.
+        // And we will look out from the next interval onwards.
+        
         // Burst the first ballon
         int arrow = 1;
         int prevEnd = points[0][1];
@@ -27,6 +33,8 @@ class Solution {
             // There is overlapping, so ballon burst already considered.
             if(prevEnd >= currStart)
             {
+                // Both intervals gets destroyed, hence, no need to update end interval
+                // Ignore these destroyed intervals.
                 continue;
             }
             // No overlapping
