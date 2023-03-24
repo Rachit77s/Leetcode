@@ -1,7 +1,7 @@
 class Solution {
     public int minFlipsMonoIncr(String s) {
         
-        return Optimized2(s);
+        return OptimizedApproach(s);
         // return BruteForce(s);
         // return Helper(s);
     }
@@ -38,6 +38,8 @@ class Solution {
                     rightZeroes++;
             }
             
+            // We need to flip all the 1's on the left &
+            // all the 0;s on the right, which will give us monotonic
             // The no of 1's on the left + no of 0's on right
             // together gives us the flips required
             ans = Math.min(ans, leftOnes + rightZeroes);
@@ -84,36 +86,54 @@ class Solution {
 //         }
         
         
-        
+        // Calculate prefix 1's
         int[] prefixOnes = new int[n];
-        prefixOnes[0] = 0;
-        
         for(int i = 0; i < n; i++)
         {
-            if(s.charAt(i) == '1')
-                prefixOnes[i] = prefixOnes[i] + 1;
-            else
-                prefixOnes[i] = prefixOnes[i] + 0;
+            // If the character is a 1, add 1 to the prev element
+            // Otherwise, add 0 to the prev element
+            if(s.charAt(i) == '1') 
+            {
+                prefixOnes[i] = (i == 0 ? 0 : prefixOnes[i - 1]) + 1;
+            } 
+            else 
+            {
+                prefixOnes[i] = (i == 0 ? 0 : prefixOnes[i - 1]);
+            }
         }
         
         // Calculate suffix 0's
         int[] suffixZeroes = new int[n];
-        suffixZeroes[0] = 0;
-        
         for(int i = n - 1; i >= 0; i--)
         {
-            if(s.charAt(i) == '0')
-                suffixZeroes[i] = suffixZeroes[i] + 1;
-            else
-                suffixZeroes[i] = suffixZeroes[i] + 0;
+            // If the character is a 0, add 1 to the prev element
+            // Otherwise, add 0 to the prev element
+            if(s.charAt(i) == '0') 
+            {
+                suffixZeroes[i] = (i == n - 1 ? 0 : suffixZeroes[i + 1]) + 1;
+            } 
+            else 
+            {
+                suffixZeroes[i] = (i == n - 1 ? 0 : suffixZeroes[i + 1]);
+            }
         }
+        
+        for(int i = 0; i < n; i++)
+            System.out.print(prefixOnes[i]);
+        
+        System.out.println();
+        
+        for(int i = 0; i < n; i++)
+            System.out.print(suffixZeroes[i]);
         
         for(int index = 0; index < n; index++)
         {
             // We need prefix sum till the curr index
-            int leftOnes = prefixOnes[index];
+            int leftOnes = (index == 0 ? 0 : prefixOnes[index - 1]);
             // We need suffix sum from the curr index
-            int rightZeroes = suffixZeroes[index + 1];
+            int rightZeroes = (index == n-1 ? 0 : suffixZeroes[index + 1]);
+            
+            // int rightZeroes = suffixZeroes[index];
             
             ans = Math.min(ans, leftOnes + rightZeroes);
         }
