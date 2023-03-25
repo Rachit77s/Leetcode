@@ -122,11 +122,11 @@ class Solution {
         for(int i = 0; i < n; i++)
             System.out.print(prefixOnes[i]);
         
-        System.out.println();
+        //System.out.println();
         
-        Collections.reverse(Arrays.asList(suffixZeroes));
-        for(int i = 0; i < n; i++)
-            System.out.print(suffixZeroes[i]);
+        //Collections.reverse(Arrays.asList(suffixZeroes));
+        // for(int i = 0; i < n; i++)
+        //     System.out.print(suffixZeroes[i]);
         
         for(int index = 0; index < n; index++)
         {
