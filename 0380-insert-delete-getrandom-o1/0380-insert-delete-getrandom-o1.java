@@ -2,11 +2,14 @@ class RandomizedSet {
 
     
     // Neetcode: https://www.youtube.com/watch?v=j4KwhBziOpg
+    
+    java.util.Random rand;// = new java.util.Random();
     ArrayList<Integer> list;
     
-    // It will contain array element and its index in the arraylist
+    // It will contain the array element along with its index in the arraylist
+	// Size of the arraylist at every put operation will give its index.
     HashMap<Integer, Integer> map;
-    java.util.Random rand;// = new java.util.Random();
+
     
     public RandomizedSet() {
         list = new ArrayList<Integer>();
@@ -19,6 +22,8 @@ class RandomizedSet {
         if(map.containsKey(val))
             return false;
 
+        // HashMap will store the value, along with its index in the list.
+		// We can get the index by checking the list size at every insertion.
         map.putIfAbsent(val, list.size());
         list.add(val);
         
