@@ -48,7 +48,102 @@ class Solution {
         return ans;
     }
     
+    
     public int OptimizedApproach(String s)
+    {
+        int n = s.length();
+        int ans = Integer.MAX_VALUE;
+        
+        // Initialize two lists to store the number of 
+        // 1s on the left and the number of 0s on the right
+        // Calculate prefix 1's
+        int[] prefixOnes = new int[n];
+        if(s.charAt(0) == '1')
+            prefixOnes[0] = 1;
+        else
+            prefixOnes[0] = 0;
+        
+        for(int i = 1; i < n; i++)
+        {
+            if(s.charAt(i) == '1')
+                prefixOnes[i] = prefixOnes[i - 1] + 1;
+            else
+                prefixOnes[i] = prefixOnes[i - 1] + 0;
+        }
+        
+        // Calculate suffix 0's
+        int[] suffixZeroes = new int[n];
+        if(s.charAt(n-1) == '0')
+            suffixZeroes[n-1] = 1;
+        else
+            suffixZeroes[n-1] = 0;
+        
+        for(int i = n - 2; i >= 0; i--)
+        {
+            if(s.charAt(i) == '0')
+                suffixZeroes[i] = suffixZeroes[i + 1] + 1;
+            else
+                suffixZeroes[i] = suffixZeroes[i + 1] + 0;
+        }
+        
+        
+        // Calculate prefix 1's
+        // int[] prefixOnes = new int[n];
+        // for(int i = 0; i < n; i++)
+        // {
+        //     // If the character is a 1, add 1 to the prev element
+        //     // Otherwise, add 0 to the prev element
+        //     if(s.charAt(i) == '1') 
+        //     {
+        //         prefixOnes[i] = (i == 0 ? 0 : prefixOnes[i - 1]) + 1;
+        //     } 
+        //     else 
+        //     {
+        //         prefixOnes[i] = (i == 0 ? 0 : prefixOnes[i - 1]);
+        //     }
+        // }
+        
+        // // Calculate suffix 0's
+        // int[] suffixZeroes = new int[n];
+        // for(int i = n - 1; i >= 0; i--)
+        // {
+        //     // If the character is a 0, add 1 to the prev element
+        //     // Otherwise, add 0 to the prev element
+        //     if(s.charAt(i) == '0') 
+        //     {
+        //         suffixZeroes[i] = (i == n - 1 ? 0 : suffixZeroes[i + 1]) + 1;
+        //     } 
+        //     else 
+        //     {
+        //         suffixZeroes[i] = (i == n - 1 ? 0 : suffixZeroes[i + 1]);
+        //     }
+        // }
+        
+        for(int i = 0; i < n; i++)
+            System.out.print(prefixOnes[i]);
+        
+        System.out.println();
+        
+        Collections.reverse(Arrays.asList(suffixZeroes));
+        for(int i = 0; i < n; i++)
+            System.out.print(suffixZeroes[i]);
+        
+        for(int index = 0; index < n; index++)
+        {
+            // We need prefix sum till the curr index-1
+            int leftOnes = (index == 0 ? 0 : prefixOnes[index - 1]);
+            // We need suffix sum from the curr index+1
+            int rightZeroes = (index == n-1 ? 0 : suffixZeroes[index + 1]);
+            
+            // int rightZeroes = suffixZeroes[index];
+            
+            ans = Math.min(ans, leftOnes + rightZeroes);
+        }
+        
+        return ans;
+    }
+    
+    public int OptimizedApproach2(String s)
     {
         int n = s.length();
         int ans = Integer.MAX_VALUE;
@@ -118,13 +213,13 @@ class Solution {
             }
         }
         
-        for(int i = 0; i < n; i++)
-            System.out.print(prefixOnes[i]);
+//         for(int i = 0; i < n; i++)
+//             System.out.print(prefixOnes[i]);
         
-        System.out.println();
+//         System.out.println();
         
-        for(int i = 0; i < n; i++)
-            System.out.print(suffixZeroes[i]);
+//         for(int i = 0; i < n; i++)
+//             System.out.print(suffixZeroes[i]);
         
         for(int index = 0; index < n; index++)
         {
