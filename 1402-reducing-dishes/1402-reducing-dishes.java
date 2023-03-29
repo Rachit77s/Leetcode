@@ -1,7 +1,8 @@
 class Solution {
     public int maxSatisfaction(int[] satisfaction) {
         
-        return RecursionHelper(satisfaction);
+        return Helper1(satisfaction);
+        // return RecursionHelper(satisfaction);
     }
     
     public int RecursionHelper(int[] A) 
@@ -41,15 +42,31 @@ class Solution {
     {
         Arrays.sort(A);
         
-        int sum = 0;
+        int currSum = 0;
+        int startIdx = A.length - 1;
         
-        int start = 0;
-//         for(int i = A.length - 1; i >= 0; i--)
-//         {
+        for(int i = A.length - 1; i >= 0; i--)
+        {
+            currSum += A[i];
             
-//         }
+            if(currSum < 0)
+                break;
+            
+            startIdx--;
+        }
         
-        return 1;
+        startIdx++;
+        
+        int time = 1;
+        
+        int ans = 0;
+        for(int i = startIdx; i < A.length; i++)
+        {
+            ans += A[i] * time;
+            time++;
+        }
+        
+        return ans;
     }
 }
 
