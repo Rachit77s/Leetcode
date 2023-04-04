@@ -1,18 +1,57 @@
 class Solution {
-    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+    public int[] successfulPairs(int[] spells, int[] potions, long success)     {
+        return Approach1(spells, potions, success);
+        // return Bruteforce(spells, potions, success);
+    }
+    
+    public int[] Approach1(int[] spells, int[] potions, long success) 
+    {
+        int[] ans = new int[spells.length];
+        
         Arrays.sort(potions);
-        for(int i=0;i<spells.length;i++){
-            int l=0,h=potions.length;
-            while(l<h){
-                int mid = (l+h)/2;
-                if(1L*spells[i]*potions[mid]>=success){
-                    h=mid;
-                }else{
-                    l=mid+1;
-                }
+        
+        for(int i = 0; i < spells.length; i++)
+        {
+            int count = 0;
+            
+            int left = 0;
+            int right = potions.length; // Important size
+            
+            while(left < right)
+            {
+                int mid = left + (right - left) / 2;
+                
+                long product = (long) spells[i] * potions[mid];
+                
+                if(product >= success)
+                    right = mid;
+                else
+                    left = mid + 1;
             }
-            spells[i]=potions.length-l;
+
+            ans[i] = potions.length - right;
         }
-        return spells;
+        
+        return ans;
+    }
+    
+    public int[] Bruteforce(int[] spells, int[] potions, long success) 
+    {
+        int[] ans = new int[spells.length];
+        
+        for(int i = 0; i < spells.length; i++)
+        {
+            int count = 0;
+            
+            for(int j = 0; j < potions.length; j++)
+            {
+                if(spells[i] * potions[j] >= success)
+                    count++;
+            }
+            
+            ans[i] = count;
+        }
+        
+        return ans;
     }
 }
