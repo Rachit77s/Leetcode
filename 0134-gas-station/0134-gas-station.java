@@ -1,26 +1,46 @@
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-//         int n = gas.length;
-//         int total_surplus = 0;
-//         int surplus = 0;
-//         int start = 0;
         
-//         for(int i = 0; i < n; i++){
-//             total_surplus += gas[i] - cost[i];
-//             surplus += gas[i] - cost[i];
-//             if(surplus < 0){
-//                 surplus = 0;
-//                 start = i + 1;
-//             }
-//         }
-//         return (total_surplus < 0) ? -1 : start;
+        return OptimizedHelper(gas, cost);
+        // return BruteForce(gas, cost);
+    }
+
+    // https://www.youtube.com/watch?v=xWgbFI_rXJs&ab_channel=NareshGupta
+    public int BruteForce(int[] gas, int[] cost) 
+    {
+        int n = gas.length;
         
-        return Helper1(gas, cost);
+        for(int i = 0; i < n; i++)
+        {
+            int totalGas = 0;
+            int j = i;
+            int counter = 0;
+            
+            if(gas[i] - cost[i] >= 0)
+            {
+                while(counter < n)
+                {
+                    totalGas += gas[j % n] - cost[j % n];
+                    
+                    if(totalGas < 0)
+                        break;
+                    
+                    counter++;
+                    j++;
+                }
+                
+                if(counter == n && totalGas >= 0)
+                    return i;
+            }
+        }
+        
+        return -1;
     }
     
+        
     // Neetcode: https://www.youtube.com/watch?v=lJwbPZGo05A
     // Alisha: https://www.youtube.com/watch?v=MWTHTDIBN0s
-    public int Helper1(int[] gas, int[] cost)
+    public int OptimizedHelper(int[] gas, int[] cost)
     {
         // Check if the solution even exists
         int sum = 0;
@@ -46,11 +66,4 @@ class Solution {
         
         return startIndex;  
     }
-
 }
-
-// 2 3 4
-// 3 4 3
-
-// 4 5 1 2 3    
-// 1 2 3 4 5
