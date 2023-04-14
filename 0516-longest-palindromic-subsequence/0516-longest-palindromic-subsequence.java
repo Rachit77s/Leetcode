@@ -31,18 +31,18 @@ class Solution {
             }
         }
 
-        return LCS(A, A.length(), reverse, reverse.length());
+        return LCS(A, A.length()-1, reverse, reverse.length()-1);
     }
 
     public int LCS(String A, int i, String B, int j)
     {
-        if(i <= 0 || j <= 0)
+        if(i < 0 || j < 0)
             return 0;
 
         if(dp[i][j] != -1)
             return dp[i][j];
 
-        if(A.charAt(i-1) == B.charAt(j-1))
+        if(A.charAt(i) == B.charAt(j))
             return dp[i][j] = 1 + LCS(A, i - 1, B, j - 1);
         else
             return dp[i][j] = Math.max(LCS(A, i, B, j - 1), LCS(A, i - 1, B, j));
