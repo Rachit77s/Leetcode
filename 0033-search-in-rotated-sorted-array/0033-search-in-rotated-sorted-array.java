@@ -1,89 +1,50 @@
 class Solution {
+
+    // subham: https://www.scaler.com/help_requests/694867/?ref=join-call-now    
     public int search(int[] nums, int target) {
+        int n = nums.length;
         
-        // Babbar Code Help
-        return Helper(nums, target);
-    }
-    
-    public int Helper(int[] A, int target) 
-    {
-        if(A.length == 1)
-        {
-            if(A[0] == target)
-                return 0;
-            
-            return -1;
-        }
-            
+        int pivot = findPivot(nums);
+
+        int idx1 = Arrays.binarySearch(nums, 0, pivot, target);
+        int idx2 = Arrays.binarySearch(nums, pivot, n, target);
+
+        // for(int idx : new int[]{idx1, idx2}){
+        //     if(idx < 0){
+        //         idx = -idx - 1;
+        //     }
+        //     if (idx < n && nums[idx] == target) 
+        //         return idx;
+        // }
         
-        int pivotIndex = GetPivotIndex(A);
+        if (idx1 < 0)
+            idx1 = -idx1 - 1;   // -1 because index can be at max -1
         
-        if(target >= A[0] && target <= A[pivotIndex])
-        {
-            // Search in the array1 i.e. 1st sorted array
-            // Search from 0 to Pivot index
-            int ans = BinarySearch(A, target, 0, pivotIndex);
-            return ans;
-        }
+        if (idx2 < 0)
+            idx2 = -idx2 - 1;
         
-        if(pivotIndex + 1 < A.length && target >= A[pivotIndex + 1] && target <= A[A.length - 1])
-        {
-            // Search in the array2 i.e. 2nd sorted array
-            // Search from Pivot index + 1 to N - 1
-            int ans = BinarySearch(A, target, pivotIndex + 1, A.length - 1);
-            return ans;
-        }
+        if (idx1 < n && nums [idx1] == target)
+            return idx1;
+        else if (idx2 < n && nums [idx2] == target)
+            return idx2;
         
-        // Target doesn't exists
         return -1;
     }
     
-    public int GetPivotIndex(int[] A) 
+    private int findPivot(int[] nums) 
     {
         int left = 0;
-        int right = A.length - 1;
-        int n = A.length;
+        int right = nums.length - 1;
         
-        while(left <= right)
-        {
+        while (left < right) {
             int mid = left + (right - left) / 2;
-            
-            // Check for those 2 abnormal cases which are breaking the sorted order.
-            // Since we know in sorted array mid+1 will always be greater than mid.
-            if(mid + 1 < n && A[mid] > A[mid + 1])
-                return mid;
-            
-            if(mid - 1 >= 0 && A[mid - 1] > A[mid])
-                return mid - 1;
-            
-            // Assumption: Pivot will be the largest element in the array.
-            // Start ele will be lesser than mid element in sorted array.
-            // Compare the start element with mid. 
-            // Go towards the abnormality.
-            if(A[left] >= A[mid])    // Go left
-                right = mid - 1;
-            else // if(A[mid] > A[start])  // Go right
+            int minVal = Math.min(nums[mid], Math.min(nums[left], nums[right]));
+            if (minVal == nums[right])
                 left = mid + 1;
+            else
+                right = mid;
         }
-        
-        return 0;
-    }
-    
-    public int BinarySearch(int[] A, int target, int left, int right)
-    {
-        while(left <= right)
-        {
-            int mid = left + (right - left) / 2;
-            
-            if(A[mid] == target)
-                return mid;
-            
-            if(A[mid] > target)
-                right = mid - 1;
-            else 
-                left = mid + 1;
-        }
-        
-        return -1;
+
+        return left;
     }
 }
