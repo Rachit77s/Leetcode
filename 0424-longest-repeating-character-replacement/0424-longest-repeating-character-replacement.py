@@ -1,27 +1,20 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         map = {}
-        n = len(s)
-        right = 0
-        left = 0
-        maxCharCount = 0
-        ans = 0
+        mostFreqCharCount, l, ans = 0, 0, 0
         
-        while right < n:
-            ch = s[right]
-            map[ch] = map.get(ch, 0) + 1
-            maxCharCount = max(maxCharCount, map[ch])
+        
+        for r in range(len(s)):
+            map[s[r]] = 1 + map.get(s[r], 0)
             
-            diffChar = (right - left + 1) - maxCharCount
+            mostFreqCharCount = max(mostFreqCharCount, map.get(s[r], 0))
+            currLength = r - l + 1
             
-            if(diffChar > k):
-                innerCh = s[left]
-                map[innerCh] = map.get(innerCh, 0) - 1
+            if currLength - max(map.values()) > k:
+                # print(s[l])
+                map[s[l]] = map.get(s[l], 0) - 1
+                l += 1
                 
-                left += 1
-            
-            
-            ans = max(ans, right - left + 1)
-            right += 1
+            ans = max(ans, r - l + 1)
             
         return ans
