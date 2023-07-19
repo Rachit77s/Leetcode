@@ -3,14 +3,14 @@ class Solution:
         
         intervals.sort(key = lambda x: x[1])
         ans = 0
-        k = -inf
         
-        for x,y in intervals:
-            if x >= k:
-                # Case 1
-                k = y
-            else:
-                # Case 2
+        prevEnd = intervals[0][1]
+        
+        for x,y in intervals[1:]:
+            if prevEnd > x:
                 ans += 1
+                prevEnd = min(prevEnd, y)
+            else:
+                prevEnd = y
         
         return ans
