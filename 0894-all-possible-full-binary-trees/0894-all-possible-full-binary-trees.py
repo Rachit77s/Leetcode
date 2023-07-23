@@ -4,27 +4,21 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
     def allPossibleFBT(self, n: int) -> List[TreeNode]:
         if n % 2 == 0:
             return []
+        if n == 1:
+            return [TreeNode()]
 
-        dp = [[] for _ in range(n + 1)]
-        dp[1].append(TreeNode(0))
-        
-        for count in range(3, n + 1, 2):
-            for i in range(1, count - 1, 2):
-                j = count - 1 - i
-                for left in dp[i]:
-                    for right in dp[j]:
-                        root = TreeNode(0, left, right)
-                        dp[count].append(root)
+        res = []
+        for i in range(1, n, 2):
+            left = self.allPossibleFBT(i)
+            right = self.allPossibleFBT(n - i - 1)
 
-        return dp[n]
-        
+            for l in left:
+                for r in right:
+                    root = TreeNode(0, l, r)
+                    res.append(root)
+
+        return res
