@@ -4,51 +4,43 @@ class Solution {
         return BFS(grid);
     }
     
-    class Node {
-        int row;
-        int col;
-        int dist;
-        Node(int x, int y, int dist) {
-            this.row = x;
-            this.col = y;
-            this.dist = dist;
-        }
-    }
+    int[] DIRx = new int[]{-1, -1, -1, 0, 1, 1, 1,  0};
+    int[] DIRy = new int[]{-1,  0,  1, 1, 1, 0, -1, -1};
+        
     public int BFS(int[][] A)
     {
-        int m = A.length;
-        int n = A[0].length;
+        int R = A.length;
+        int C = A[0].length;
 
-        if(A[0][0] == 1 || A[m-1][n-1] == 1) 
+        if(A[0][0] == 1 || A[R-1][C-1] == 1) 
             return -1;
         
-        boolean[][] visited = new boolean[A.length][A[0].length];
-
-        int[] globalRows = new int[]{-1, -1, -1, 0, 1, 1, 1,  0};
-        int[] globalCols = new int[]{-1,  0,  1, 1, 1, 0, -1, -1};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{1, 0, 0}); // dist, r, c
         
-        Queue<Node> q = new LinkedList<>();
-        q.add(new Node(0, 0, 1));
+        boolean[][] visited = new boolean[R][C];
         visited[0][0] = true;
-
-        while(!q.isEmpty())
+        
+        while(!queue.isEmpty())
         {
-            Node poppedNode = q.remove();
+            int[] curr = queue.poll();
+            int dist = curr[0];
+            int r = curr[1];
+            int c = curr[2];
             
-            if(poppedNode.row == A.length - 1 && poppedNode.col == A[0].length - 1)
-                return poppedNode.dist;
+            // Got the destination
+            if (r == R - 1 && c == C - 1) 
+                return dist;
             
-            for (int i = 0; i < 8; i++)
+            for (int[] neighbor : GetAllValidNeighbours(A, r, c)) 
             {
-                int newRow = poppedNode.row + globalRows[i];
-                int newCol = poppedNode.col + globalCols[i];
-                // int newDist = poppedNode.distanceFromSource;
-
-                if(IsSafe(A, visited, newRow, newCol))
+                int nr = neighbor[0];
+                int nc = neighbor[1];
+                
+                if (visited[nr][nc] == false) 
                 {
-                    // If not the ans, enqueue into the queue and mark as visited
-                    q.add(new Node(newRow, newCol, poppedNode.dist + 1));
-                    visited[newRow][newCol] = true;
+                    visited[nr][nc] = true;
+                    queue.add(new int[]{dist + 1, nr, nc});
                 }
             }
         }
@@ -56,16 +48,27 @@ class Solution {
         return -1;
     }
     
-    public boolean IsSafe(int[][] A, boolean[][] visited, int row, int col)
+    // Gives all the VALID neighbours of given row and column
+    public List<int[]> GetAllValidNeighbours(int[][] A, int r, int c)
     {
-        // Return true if it is safe to visit
-        if(row >= 0 && row < A.length
-            && col >= 0 && col < A[row].length
-            && visited[row][col] == false && A[row][col] == 0)
+        int R = A.length;
+        int C = A[0].length;
+        
+        List<int[]> validNeighbors = new ArrayList<>();
+        
+        for(int i = 0; i < 8; i++)
+        {
+            int nr = r + DIRx[i];
+            int nc = c + DIRy[i];
+            
+            // IsSafeFn
+            if(nr >= 0 && nr < R && nc >= 0 && nc < C
+              && A[nr][nc] == 0)
             {
-                return true;
+                validNeighbors.add(new int[]{nr, nc});
             }
-
-        return false;
+        }
+        
+        return validNeighbors;
     }
 }
