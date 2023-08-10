@@ -1,24 +1,30 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> bool:
-        l, r = 0, len(nums)-1
-        while l <= r:
-            mid = l + (r-l)//2
-            if nums[mid] == target:
-                return True
-            while l < mid and nums[l] == nums[mid]: # tricky part
-                l += 1
-            # the first half is ordered
-            if nums[l] <= nums[mid]:
-                # target is in the first half
-                if nums[l] <= target < nums[mid]:
-                    r = mid - 1
+        
+        n = len(nums)
+        left = 0
+        right = n-1
+        while left < right:
+            mid = left + (right - left) // 2
+            while left < mid and nums[left] == nums[mid]:
+                left += 1
+                mid = left + (right - left) // 2
+            
+            while mid < right and nums[mid] == nums[right]:
+                right -= 1
+                mid = left + (right - left) // 2
+
+            if nums[mid] == target: return True
+            elif nums[mid] < nums[right]:
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1
                 else:
-                    l = mid + 1
-            # the second half is ordered
+                    right = mid
             else:
-                # target is in the second half
-                if nums[mid] < target <= nums[r]:
-                    l = mid + 1
+                if nums[left] <= target and target <= nums[mid]:
+                    right = mid
                 else:
-                    r = mid - 1
-        return False
+                    left = mid + 1
+
+        if nums[left] == target: return True
+        else: return False
