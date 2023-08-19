@@ -1,70 +1,84 @@
-class Solution:
+from typing import Dict, List
+from collections import deque, defaultdict, OrderedDict, Counter
+from heapq import heapify, heappush, heappop
+from bisect import bisect_left, bisect_right
+from functools import lru_cache
+from itertools import combinations, permutations, groupby
+from math import gcd
+import re
+import sys
+inf = float('inf')
+sys.setrecursionlimit(10**9)
+MOD = 10**9+7
 
-    class UnionFind:
-        def __init__(self, n):
-            self.parent = list(range(n))
-            self.size = [1] * n
-            self.max_size = 1
 
-        def find(self, x):
-            # Finds the root of x
-            if x != self.parent[x]:
-                self.parent[x] = self.find(self.parent[x])
-            return self.parent[x]
+class UnionFind:
+    def __init__(self, n):
+        self.par = [i for i in range(n)]
 
-        def union(self, x, y):
-            # Connects x and y
-            root_x = self.find(x)
-            root_y = self.find(y)
-            if root_x != root_y:
-                if self.size[root_x] < self.size[root_y]:
-                    root_x, root_y = root_y, root_x
-                self.parent[root_y] = root_x
-                self.size[root_x] += self.size[root_y]
-                self.max_size = max(self.max_size, self.size[root_x])
-                return True
+    def find(self, a):
+        if self.par[a] == a:
+            return a
+        self.par[a] = self.find(self.par[a])
+        return self.par[a]
+
+    def union(self, a, b):
+        a, b = self.find(a), self.find(b)
+        if a > b:
+            a, b = b, a
+        if a == b:
             return False
+        self.par[b] = a
+        return True
 
-    def findCriticalAndPseudoCriticalEdges(self, n, edges):
-        new_edges = [edge.copy() for edge in edges]
-        # Add index to edges for tracking
-        for i, edge in enumerate(new_edges):
-            edge.append(i)
-        # Sort edges based on weight
-        new_edges.sort(key=lambda x: x[2])
 
-        # Find MST weight using union-find
-        uf_std = self.UnionFind(n)
-        std_weight = 0
-        for u, v, w, _ in new_edges:
-            if uf_std.union(u, v):
-                std_weight += w
+class Solution:
+    def findCriticalAndPseudoCriticalEdges(self, n: int, edges: List[List[int]]) -> List[List[int]]:
+        # save the edge id
+        edges = [(u, v, w, i) for i, (u, v, w) in enumerate(edges)]
+        edges.sort(key=lambda x: x[2])
 
-        # Check each edge for critical and pseudo-critical
-        critical = []
-        pseudo_critical = []
-        for (u, v, w, i) in new_edges:
-            # Ignore this edge and calculate MST weight
-            uf_ignore = self.UnionFind(n)
-            ignore_weight = 0
-            for (x, y, w_ignore, j) in new_edges:
-                if i != j and uf_ignore.union(x, y):
-                    ignore_weight += w_ignore
-            # If the graph is disconnected or the total weight is greater,
-            # the edge is critical
-            if uf_ignore.max_size < n or ignore_weight > std_weight:
-                critical.append(i)
-                continue
+        # Do not use this edge
+        def find_mst_not_use_this_edge(not_use):
+            unionFind = UnionFind(n)
+            res = 0
+            for i, (u, v, w, _) in enumerate(edges):
+                # do not use this edge
+                if i == not_use:
+                    continue
+                if unionFind.union(u, v) == True:
+                    res += w
 
-            # Force this edge and calculate MST weight
-            uf_force = self.UnionFind(n)
-            force_weight = w
-            uf_force.union(u, v)
-            for (x, y, w_force, j) in new_edges:
-                if i != j and uf_force.union(x, y):
-                    force_weight += w_force
-            # If total weight is the same, the edge is pseudo-critical
-            if force_weight == std_weight:
-                pseudo_critical.append(i)
+            return res if all(unionFind.find(i) == 0 for i in range(n)) else inf
 
-        return [critical, pseudo_critical]
+        # Need to use this edge
+        def find_mst_need_use_this_edge(need_use):
+            # use this edge first
+            unionFind = UnionFind(n)
+            res = edges[need_use][2]
+            unionFind.union(edges[need_use][0], edges[need_use][1])
+            # And then create mst
+            for i, (u, v, w, _) in enumerate(edges):
+				# alread use this edge
+                if i == need_use:
+                    continue
+                if unionFind.union(u, v) == True:
+                    res += w
+
+            return res if all(unionFind.find(i) == 0 for i in range(n)) else inf
+        # Normal MST value
+        base = find_mst_not_use_this_edge(-1)
+        cri = []
+        p_cri = []
+        for i in range(len(edges)):
+            v = find_mst_not_use_this_edge(i)
+            # If MST value is increased, it means all MST use this edge.
+            if v != base:
+                cri.append(edges[i][3])
+            else:
+                v = find_mst_need_use_this_edge(i)
+                # If MST value is not changed, it means at least one MST which use this edge exists
+                if v == base:
+                    p_cri.append(edges[i][3])
+
+        return [cri, p_cri]
