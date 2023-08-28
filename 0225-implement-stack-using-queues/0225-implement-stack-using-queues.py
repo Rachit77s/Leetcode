@@ -1,23 +1,42 @@
+from collections import deque
+
 class MyStack:
 
     def __init__(self):
-        self._queue = collections.deque()
-
-    def push(self, x):
-        q = self._queue
-        q.append(x)
-        for _ in range(len(q) - 1):
-            q.append(q.popleft())
+        """
+        Initialize your data structure here.
+        """
+        self.queue = deque()
         
-    def pop(self):
-        return self._queue.popleft()
 
-    def top(self):
-        return self._queue[0]
-    
-    def empty(self):
-        return not len(self._queue)
+    def push(self, x: int) -> None:
+        """
+        Push element x onto stack.
+        """
+        tmp = deque([x])
+        tmp.extend(self.queue)
+        self.queue = tmp
+        
 
+    def pop(self) -> int:
+        """
+        Removes the element on top of the stack and returns that element.
+        """
+        return self.queue.popleft()
+        
+
+    def top(self) -> int:
+        """
+        Get the top element.
+        """
+        return self.queue[0]
+        
+
+    def empty(self) -> bool:
+        """
+        Returns whether the stack is empty.
+        """
+        return len(self.queue) == 0
         
 
 
