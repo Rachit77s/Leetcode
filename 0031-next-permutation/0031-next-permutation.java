@@ -60,13 +60,23 @@ class Solution {
         // O/P: 2 3 0 0 1 4 5
         
         // Step 2: Find the element that is just greater than the break point and swap
-        int justGreaterValueIndex = index+1;
+//         int justGreaterValueIndex = index+1;
          
-        for(int i = index + 1; i < n; i++)
+//         for(int i = index + 1; i < n; i++)
+//         {
+//             if(A[index] < A[i] && A[i] <= A[justGreaterValueIndex])
+//             {
+//                 justGreaterValueIndex = i;
+//             }
+//         }
+        
+        // Aliter of Step 2: Start from the last
+        for(int i = n - 1; i > index; i--)
         {
-            if(A[index] < A[i] && A[i] <= A[justGreaterValueIndex])
+            if(A[i] > A[index])
             {
-                justGreaterValueIndex = i;
+                Swap(A, i, index);
+                break;
             }
         }
             
@@ -75,7 +85,6 @@ class Solution {
 //         A[index] = A[justGreaterValueIndex];
 //         A[justGreaterValueIndex] = tmp;
         
-        Swap(A, index, justGreaterValueIndex);
         SwapRemainingArray(A, index+1, n-1);
         
         return;
