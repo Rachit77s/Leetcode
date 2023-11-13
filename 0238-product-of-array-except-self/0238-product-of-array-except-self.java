@@ -1,9 +1,11 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
         
-        return ApproachI(nums);
+        return MostOptimized(nums);
+        // return ApproachI(nums);
     }
     
+    // https://www.youtube.com/watch?v=G9zKmhybKBM
     public int[] ApproachI(int[] A) {
         
         // For a number, we are getting product of all the numbers on the left &
@@ -33,6 +35,29 @@ class Solution {
         for(int i = 0; i < n; i++)
         {
             ans[i] = left[i] * right[i];
+        }
+        
+        return ans;
+    }
+    
+    public int[] MostOptimized(int[] A)
+    {
+        // Based on optimization of MI
+        int n = A.length;
+        int product = 1;
+        int[] ans = new int[n];
+        
+        for(int i = 0; i < n; i++)
+        {
+            ans[i] = product;
+            product = product * A[i];
+        }
+        
+        product = 1;
+        for(int i = n-1; i >= 0; i--)
+        {
+            ans[i] = ans[i] * product;
+            product = product * A[i];
         }
         
         return ans;
