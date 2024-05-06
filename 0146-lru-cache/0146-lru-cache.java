@@ -21,12 +21,12 @@ class LRUCache {
     // 2 Doubly LL, Head and Tail Dummy Nodes/Pointers
     DoublyLLNode head = new DoublyLLNode(0, 0);
     DoublyLLNode tail = new DoublyLLNode(0, 0);
-
+    
+    // Key, Address of DLL Node
     HashMap<Integer, DoublyLLNode> map = new HashMap<Integer, DoublyLLNode>();
     int capacity;
 
     public LRUCache(int capacity) {
-        
         this.capacity = capacity;
         
         // Attach head and tail
@@ -41,7 +41,7 @@ class LRUCache {
     // so remove it from its prev position and insert it just after the head.
     public int get(int key) {
         
-        if (map.containsKey(key))
+        if(map.containsKey(key))
         {
             // Get the Node's reference pointer
             DoublyLLNode node = map.get(key);
@@ -50,19 +50,19 @@ class LRUCache {
             // a) Remove the node from its current position
             // b) Insert the node at the head of the Doubly LL
             remove(node);
-            insert(node); // This is moveToHead function
-            return node.value;
+            insertJustAfterHead(node); // This is moveToHead function
+            return node.value;  
         }
-
+        
         return -1;
     }
     
     // Step 4: remove Method, Remove the given Node, and link its prev and next node in O(1)
-    public void remove(DoublyLLNode node)
-    {
+    public void remove(DoublyLLNode node) {
+        
         // IMP: First Remove the node from Map
         map.remove(node.key);
-
+        
         // Unlink the Node from other Nodes i.e. from its prev and next node
         node.prev.next = node.next;
         node.next.prev = node.prev;
@@ -78,21 +78,22 @@ class LRUCache {
         nextNode.prev = prevNode;
         */
     }
-
+    
     // Step 5: Create a function to add a node to the head of the Doubly LL
     // InsertNode Method, just after the dummy Head node in O(1) time
     // Move node to the head i.e. moveToHead()
-    public void insert(DoublyLLNode node)
-    {
+    public void insertJustAfterHead(DoublyLLNode nodeToInsert) {
+        
         // IMP: First, Directly store the node in the map
-        map.put(node.key, node);
+        map.put(nodeToInsert.key, nodeToInsert);
 
         // Insert the node just after the dummy head node
         DoublyLLNode tempNode = head.next;
-        head.next = node;
-        node.prev = head;
-        tempNode.prev = node;
-        node.next = tempNode;
+        head.next = nodeToInsert;
+        nodeToInsert.prev = head;
+        
+        tempNode.prev = nodeToInsert;
+        nodeToInsert.next = tempNode;
     }
     
     // Step 6: PUT Method
@@ -100,6 +101,7 @@ class LRUCache {
     // If the map contains node, remove the node since the same node with a new value came.
     // If capacity becomes overflow, remove the node just before the tail node i.e. LRU node.
     public void put(int key, int value) {
+        
         // IMP:  1st check does the LRUCache contains this key or not
         if(map.containsKey(key))
         {
@@ -115,7 +117,7 @@ class LRUCache {
             remove(tail.prev);
 
         // At the last, insert the node to the head of the Doubly LL
-        insert(new DoublyLLNode(key, value));
+        insertJustAfterHead(new DoublyLLNode(key, value));
     }
 }
 
