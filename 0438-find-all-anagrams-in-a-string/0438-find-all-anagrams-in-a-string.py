@@ -3,20 +3,19 @@ class Solution:
         ans = []
         
         windowSize = len(p)
-        queue = collections.deque()
         mapOfP = Counter(p)
         mapOfS = Counter()
+        left = 0
         
-        for i in range(len(s)):
-            queue.append(i)
-            mapOfS[s[i]] += 1
+        for right, char in enumerate(s):
+            mapOfS[char] += 1
             
-            while len(queue) > windowSize:
-                tchar = queue.popleft()
-                mapOfS[s[tchar]] -= 1
+            while right - left + 1 > windowSize:
+                tchar = s[left]
+                mapOfS[tchar] -= 1
+                left += 1
                 
-            if len(queue) == windowSize and mapOfP == mapOfS:
-                # dp[0]
-                ans.append(queue[0])
+            if right - left + 1 == windowSize and mapOfP == mapOfS:
+                ans.append(left)
                 
         return ans            
