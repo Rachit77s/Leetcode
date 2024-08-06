@@ -16,6 +16,7 @@ class Solution:
                 if tchar in vowel:
                     count -= 1
 
-            ans = max(ans, count)
+            if len(queue) == k:
+                ans = max(ans, count)
             
         return ans
