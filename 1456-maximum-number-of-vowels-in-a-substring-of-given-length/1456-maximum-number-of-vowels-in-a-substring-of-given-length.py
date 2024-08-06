@@ -1,20 +1,21 @@
 class Solution:
     def maxVowels(self, s: str, k: int) -> int:
+        vowel = "aeiou"
+        ans = 0
         queue = collections.deque()
-        vowels = "aeiou"
-        
-        currCount = 0
-        maxCount = 0
+        count = 0
         
         for char in s:
-            currCount += char in vowels
+            if char in vowel:
+                count += 1
+                
             queue.append(char)
             
             if len(queue) > k:
-                removedChar = queue.popleft()
-                currCount -= removedChar in vowels
-                
-            maxCount = max(maxCount, currCount)
-                
-        return maxCount
-        
+                tchar = queue.popleft()
+                if tchar in vowel:
+                    count -= 1
+
+            ans = max(ans, count)
+            
+        return ans
