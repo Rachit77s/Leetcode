@@ -1,16 +1,16 @@
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        queue = deque()
-        seen = set()
+        map = {}
         
-        for index,val in enumerate(nums):
-            if val in seen:
-                return True
-            
-            seen.add(val)
-            
-            if len(seen) > k:
-                seen.remove(nums[index-k])
- 
-
+        for index,num in enumerate(nums):
+            if num in map:
+                oldIdx = map[num]
+                
+                if abs(index - oldIdx) <= k:
+                    return True
+                
+                map[num] = index
+            else:
+                map[num] = index
+        
         return False
