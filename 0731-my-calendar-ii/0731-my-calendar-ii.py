@@ -1,35 +1,24 @@
 class MyCalendarTwo:
 
     def __init__(self):
-        self.overlaps = []
-        self.calendar = []
+        self.nonoverlapping = []
+        self.overlapping = [] # contains 2 overlapped events
 
-    def book(self, start, end):
-        for i, j in self.overlaps:
-            if start < j and end > i:
+    def book(self, startTime: int, endTime: int) -> bool:
+        
+        # check for triple booking as overlapping already has 2 overlapping
+        for s, e in self.overlapping:
+            if endTime > s and e > startTime:
                 return False
-        for i, j in self.calendar:
-            if start < j and end > i:
-                self.overlaps.append((max(start, i), min(end, j)))
-        self.calendar.append((start, end))
+        
+        for s, e in self.nonoverlapping:
+            if endTime > s and e > startTime:
+                self.overlapping.append((max(s,startTime), min(e,endTime)))
+                
+        self.nonoverlapping.append((startTime, endTime))
         return True
-    
-    
-        '''
-            s2   e2
-            s1   e1
-            
-               5    12 
-            
-        `` base   10      20
-        
-            10   20
-                         50  60
-            10       40
-         5     15
-         
-        '''
-        
+                
+                
 # Your MyCalendarTwo object will be instantiated and called as such:
 # obj = MyCalendarTwo()
 # param_1 = obj.book(startTime,endTime)
